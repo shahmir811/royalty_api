@@ -53,5 +53,11 @@ Route::group([
     Route::post('update-customer/{id}', 'CustomerController@update');
     Route::get('change-customer-status/{id}', 'CustomerController@changeCustomerStatus');
 
+    // Web Admin Location Controller
+    Route::get('locations', 'LocationController@index');   
+    Route::post('add-location', 'LocationController@store');
+    Route::get('show-location/{id}', 'LocationController@show');  
+    Route::post('update-location/{id}', 'LocationController@update');
+    Route::get('change-location-status/{id}', 'LocationController@changeLocationStatus');       
 
 });

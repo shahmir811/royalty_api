@@ -12,7 +12,6 @@ class Location extends Model
 
     protected $fillable = [
         'name',
-        'status',
         'contact_no'
     ];    
 
