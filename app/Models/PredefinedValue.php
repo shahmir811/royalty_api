@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class PredefinedValue extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'percent',
+        'show_tax'
+    ];  
+    
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];    
 }

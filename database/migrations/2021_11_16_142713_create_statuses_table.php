@@ -16,7 +16,7 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('type'); // type means sale / purchase
+            $table->string('type'); // type means sale / purchase
             $table->timestamps();
         });
     }

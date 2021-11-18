@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Route;
 
 // Must uncomment line-29 in App\Providers\App\Providers\RouteServiceProvider to use following namespace
 
-Route::get('greet', function (Request $request) {
-    return response()->json(['status' => 'Good hai'], 200);
-});
-
-// Route::post('login', 'API\Auth\AuthController@login');
-
 Route::group([
     'namespace' => 'API\Auth',
     'prefix' => 'auth'
@@ -28,5 +22,28 @@ Route::group([
 
     Route::post('/userForgotPassword', 'ForgotPasswordController@userForgotPassword');
     Route::post('/resetPassword', 'ForgotPasswordController@resetPassword');    
+
+});
+
+// Web Admin Routes
+
+Route::group([
+    'middleware' => ['auth:api', 'role:admin'],
+    'namespace' => 'API\Web\Admin',
+    'prefix' => 'wadmin'
+
+], function () {
+
+    // Web Admin User Controller
+    Route::get('users', 'UserController@users');
+    Route::post('add-user', 'UserController@AddUser');
+    Route::post('update-user/{id}', 'UserController@updateUser');
+    Route::post('update-password/{id}', 'UserController@updatePassword');
+    Route::delete('delete-user/{id}', 'UserController@deleteUser');
+    Route::get('change-user-status/{id}', 'UserController@changeUserStatus');    
+
+    // Web Admin PredefinedValue Controller    
+    Route::get('tax-details', 'PredefinedValueController@taxDetails');
+    Route::post('update-tax-details', 'PredefinedValueController@updateTaxDetails');
 
 });

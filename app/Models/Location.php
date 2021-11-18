@@ -9,4 +9,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Location extends Model
 {
     use HasFactory, softDeletes;
+
+    protected $fillable = [
+        'name',
+        'status',
+        'contact_no'
+    ];    
+
+    public function sale_details()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }      
+    
+    public function purchase_details()
+    {
+        return $this->hasMany(PurchaseDetail::class);
+    }      
+    
+    
 }
