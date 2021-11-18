@@ -15,7 +15,9 @@ class PredefinedValueController extends Controller
         return response() -> json([
             'status' => 1,
             'message' => 'Current tax details',
-            'data' => $record
+            'data' => [
+                'tax' => $record
+            ]
         ], 200);              
     }
 
@@ -29,7 +31,9 @@ class PredefinedValueController extends Controller
         return response() -> json([
             'status' => 1,
             'message' => 'Tax records updated',
-            'data' => $record
+            'data' => [
+                'tax' => $record
+            ]
         ], 200);        
     }
 }

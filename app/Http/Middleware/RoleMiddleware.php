@@ -17,7 +17,10 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, $role)
     {
         if(!$request->user()->hasRole($role)) {
-            abort(404);
+            return response([
+                'status' => '0',
+                'message' => 'Not have enough rights'
+            ], 404);
         }
                 
         return $next($request);

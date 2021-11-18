@@ -46,4 +46,12 @@ Route::group([
     Route::get('tax-details', 'PredefinedValueController@taxDetails');
     Route::post('update-tax-details', 'PredefinedValueController@updateTaxDetails');
 
+    // Web Admin Customer Controller
+    Route::get('customers', 'CustomerController@index');
+    Route::post('add-customer', 'CustomerController@store');
+    Route::get('show-customer/{id}', 'CustomerController@show');
+    Route::post('update-customer/{id}', 'CustomerController@update');
+    Route::get('change-customer-status/{id}', 'CustomerController@changeCustomerStatus');
+
+
 });

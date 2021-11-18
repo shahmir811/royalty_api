@@ -16,7 +16,9 @@ class UserController extends Controller
         return response() -> json([
             'status' => 1,
             'message' => 'List of all system Users',
-            'data' => UserResource::collection($users)
+            'data' => [
+                'users' => UserResource::collection($users)
+            ]
         ], 200);
     }
 
@@ -32,7 +34,10 @@ class UserController extends Controller
 
         return response() -> json([
             'status' => 1,
-            'message' => 'New user added successfully'
+            'message' => 'New user added successfully',
+            'data' => [
+                'user' => new UserResource($newUser)
+            ]            
         ], 201);
     } 
 
