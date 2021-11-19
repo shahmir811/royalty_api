@@ -34,7 +34,7 @@ class BaseCustomerController extends Controller
             'data' => [
                 'customer' => new CustomerResource($customer)
             ]
-        ], 200);                
+        ], 201);                
 
     }
 

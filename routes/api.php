@@ -60,4 +60,12 @@ Route::group([
     Route::post('update-location/{id}', 'LocationController@update');
     Route::get('change-location-status/{id}', 'LocationController@changeLocationStatus');       
 
+    // Web Admin Inventory Controller
+    Route::get('inventory-list', 'InventoryController@index');
+    Route::post('add-inventoryItem', 'InventoryController@store');   
+    Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
+    Route::post('update-inventoryItem/{id}', 'InventoryController@update');
+    Route::get('change-inventoryItem-status/{id}', 'InventoryController@changeInventoryItemStatus');  
+
+
 });
