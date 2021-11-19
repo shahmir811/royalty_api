@@ -67,5 +67,34 @@ Route::group([
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
     Route::get('change-inventoryItem-status/{id}', 'InventoryController@changeInventoryItemStatus');  
 
+});
+
+
+// Web Employee Routes
+
+Route::group([
+    'middleware' => ['auth:api', 'role:employee'],
+    'namespace' => 'API\Web\Employee',
+    'prefix' => 'wemployee'
+
+], function () {
+
+    // Web Employee Customer Controller
+    Route::get('customers', 'CustomerController@index');
+    Route::post('add-customer', 'CustomerController@store');
+    Route::get('show-customer/{id}', 'CustomerController@show');
+    Route::post('update-customer/{id}', 'CustomerController@update');
+
+    // Web Employee Location Controller
+    Route::get('locations', 'LocationController@index');   
+    Route::post('add-location', 'LocationController@store');
+    Route::get('show-location/{id}', 'LocationController@show');  
+    Route::post('update-location/{id}', 'LocationController@update');
+
+    // Web Employee Inventory Controller
+    Route::get('inventory-list', 'InventoryController@index');
+    Route::post('add-inventoryItem', 'InventoryController@store');   
+    Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
+    Route::post('update-inventoryItem/{id}', 'InventoryController@update');
 
 });
