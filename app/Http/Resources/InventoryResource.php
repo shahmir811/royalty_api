@@ -24,6 +24,7 @@ class InventoryResource extends JsonResource
             'weight' => number_format($this->weight,2),
             'purchase_price' => number_format($this->purchase_price,2),
             'sale_price' => number_format($this->sale_price,2),
+            'location_id' => $this->location->id,
             'location' => $this->location->name,
             'status' => $this->deleted_at ? 'Deactive' : 'Active',
         ];

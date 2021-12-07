@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\Common;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Inventory;
+use App\Models\{Inventory, Location};
 use App\Http\Resources\InventoryResource;
 use App\Http\Requests\Admin\InventoryFormRequest;
 
@@ -26,15 +26,30 @@ class BaseInventoryController extends Controller
     public function store(InventoryFormRequest $request)
     {
         $item = new Inventory;
-        $this->saveDate($item, $request);
 
-        return response() -> json([
-            'status' => 1,
-            'message' => 'Item is stored in inventory',
-            'data' => [
-                'item' => new InventoryResource($item)
-            ]
-        ], 201);               
+        if($this->itemAlreadyInWarehouse($request->item_name, $request->location_id)) {
+            return response() -> json([
+                'status' => 0,
+                'message' => 'Item already in mentioned location',
+                'errors' => [
+                    "item_name" => ['Item already exists in this location']
+                ] 
+            ], 422);
+        
+        } else {
+
+            $this->saveDate($item, $request);
+            return response() -> json([
+                'status' => 1,
+                'message' => 'Item is stored in inventory',
+                'data' => [
+                    'item' => new InventoryResource($item)
+                ]
+            ], 201);         
+        }
+
+
+                
     }
 
     /////////////////////////////////////////////////////////////////////////      
@@ -78,6 +93,14 @@ class BaseInventoryController extends Controller
         $item->sale_price       = $request->sale_price;
         $item->location_id      = $request->location_id;
         $item->save();
+    }
+
+    /////////////////////////////////////////////////////////////////////////  
+    private function itemAlreadyInWarehouse($item, $location)
+    {
+        $location_id = Location::findOrFail($location)->pluck('id');
+        $record = Inventory::where('item_name', $item)->where('location_id', $location_id)->count();
+        return $record ? true : false;
     }
     
 }

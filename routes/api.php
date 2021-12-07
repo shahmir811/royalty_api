@@ -55,6 +55,7 @@ Route::group([
 
     // Web Admin Location Controller
     Route::get('locations', 'LocationController@index');   
+    Route::get('active-locations', 'LocationController@activeLocations');   
     Route::post('add-location', 'LocationController@store');
     Route::get('show-location/{id}', 'LocationController@show');  
     Route::post('update-location/{id}', 'LocationController@update');
@@ -87,6 +88,7 @@ Route::group([
 
     // Web Employee Location Controller
     Route::get('locations', 'LocationController@index');   
+    Route::get('active-locations', 'LocationController@activeLocations');  
     Route::post('add-location', 'LocationController@store');
     Route::get('show-location/{id}', 'LocationController@show');  
     Route::post('update-location/{id}', 'LocationController@update');

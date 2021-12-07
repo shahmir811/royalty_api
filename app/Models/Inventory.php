@@ -29,7 +29,7 @@ class Inventory extends Model
     
     public function location()
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Location::class)->withTrashed();
     }          
 
 }

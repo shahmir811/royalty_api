@@ -14,7 +14,7 @@ class BaseLocationController extends Controller
     
     public function index()
     {
-        $locations = Location::withTrashed()->get();
+        $locations = Location::withTrashed()->orderBy('name')->get();
         return response() -> json([
             'status' => 1,
             'message' => 'List of all locations',
@@ -23,6 +23,19 @@ class BaseLocationController extends Controller
             ]
         ], 200);        
     }
+
+    /////////////////////////////////////////////////////////////////////////  
+    public function activeLocations()
+    {
+        $locations = Location::all();
+        return response() -> json([
+            'status' => 1,
+            'message' => 'List of all active locations',
+            'data' => [
+                'locations' => LocationResource::collection($locations)
+            ]
+        ], 200);         
+    }    
 
     /////////////////////////////////////////////////////////////////////////  
     public function store(LocationFormRequest $request)

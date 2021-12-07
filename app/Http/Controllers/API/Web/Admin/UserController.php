@@ -44,7 +44,7 @@ class UserController extends Controller
     /////////////////////////////////////////////////////////////////////////
     public function updateUser($id, UpdateUserFormRequest $request)
     {
-        $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
         $user->name    = $request->name;
         $user->role_id = $request->role_id;
         if($request->password) {

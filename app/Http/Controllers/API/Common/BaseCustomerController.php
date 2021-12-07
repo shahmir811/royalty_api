@@ -55,7 +55,7 @@ class BaseCustomerController extends Controller
     /////////////////////////////////////////////////////////////////////////  
     public function update(CustomerFormRequest $request, $id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::withTrashed()->findOrFail($id);
         $this->saveData($customer, $request);
 
         return response() -> json([

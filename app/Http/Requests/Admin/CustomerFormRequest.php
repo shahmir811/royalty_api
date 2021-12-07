@@ -25,12 +25,20 @@ class CustomerFormRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'mark' => 'required',
+            // 'mark' => 'required',
             'country' => 'required',
             'mobile_no_dubai' => 'required',
             'mobile_no_country' => 'required',
-            'cargo_address' => 'sometimes|required',
+            // 'cargo_address' => 'sometimes|required',
             'credit_amount' => 'sometimes|numeric',                     
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'mobile_no_dubai.required' => 'Dubai contact number is required',
+            'mobile_no_country.required' => 'Country contact number is required',
+        ];
+    }              
 }
