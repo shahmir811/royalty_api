@@ -15,10 +15,9 @@ class CreatePurchaseDetailsTable extends Migration
     {
         Schema::create('purchase_details', function (Blueprint $table) {
             $table->id();
-            $table->double('price', 10, 2); // price at time of purchase
+            $table->double('price', 10, 2); 
             $table->integer('quantity');
-            $table->double('total_purchase_price', 10, 2);
-            $table->double('total_sale_price', 10, 2);
+            $table->double('total_price', 10, 2);
 
             $table->foreignId('inventory_id');
             $table->foreignId('purchase_id');

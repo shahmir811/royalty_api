@@ -68,6 +68,10 @@ Route::group([
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
     Route::get('change-inventoryItem-status/{id}', 'InventoryController@changeInventoryItemStatus');  
 
+    // Web Admin Purchases Controller
+    Route::get('purchase-list', 'PurchaseController@purchaseList');
+    Route::post('add-purchase', 'PurchaseController@addNewPurchase');
+
 });
 
 
@@ -98,5 +102,8 @@ Route::group([
     Route::post('add-inventoryItem', 'InventoryController@store');   
     Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
+
+    // Web Employee PredefinedValue Controller    
+    Route::get('tax-details', 'PredefinedValueController@taxDetails');
 
 });

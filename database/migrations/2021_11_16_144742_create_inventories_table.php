@@ -22,7 +22,8 @@ class CreateInventoriesTable extends Migration
             $table->double('cbm', 6, 2);
             $table->double('weight', 6, 2);
             $table->double('purchase_price', 10, 2);
-            $table->double('sale_price', 10, 2); // this purchase price will be cost price in sales table            
+            $table->double('avg_price', 10, 2);
+            $table->double('sale_price', 10, 2);           
             
             $table->foreignId('location_id');
             $table->softDeletes();
