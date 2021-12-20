@@ -67,10 +67,14 @@ Route::group([
     Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
     Route::get('change-inventoryItem-status/{id}', 'InventoryController@changeInventoryItemStatus');  
+    Route::get('location-based-inventory/{id}', 'InventoryController@locationBasedInventory'); // "id" is the location id
 
     // Web Admin Purchases Controller
     Route::get('purchase-list', 'PurchaseController@purchaseList');
     Route::post('add-purchase', 'PurchaseController@addNewPurchase');
+    Route::get('show-purchase/{id}', 'PurchaseController@showPurchase');
+    Route::post('update-purchase/{id}', 'PurchaseController@updatePurchase');
+    Route::delete('remove-purchased-item/{id}', 'PurchaseController@removePurchasedItem');
 
 });
 
@@ -102,8 +106,13 @@ Route::group([
     Route::post('add-inventoryItem', 'InventoryController@store');   
     Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
+    Route::get('location-based-inventory/{id}', 'InventoryController@locationBasedInventory'); // "id" is the location id    
 
     // Web Employee PredefinedValue Controller    
     Route::get('tax-details', 'PredefinedValueController@taxDetails');
+
+    // Web Admin Purchases Controller
+    Route::get('purchase-list', 'PurchaseController@purchaseList');
+    Route::post('add-purchase', 'PurchaseController@addNewPurchase');    
 
 });

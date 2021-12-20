@@ -12,7 +12,7 @@ class InventoryTableSeeder extends Seeder
     {
         $invt1 = Inventory::create([
             'item_name' => '25 KW generator',
-            'quantity' => 5,
+            'quantity' => 0,
             'cbm' => 12.5,
             'weight' => 25,
             'purchase_price' => 105.5,
@@ -23,7 +23,7 @@ class InventoryTableSeeder extends Seeder
 
         $invt2 = Inventory::create([
             'item_name' => '20 GM lawn machine',
-            'quantity' => 10,
+            'quantity' => 0,
             'cbm' => 15,
             'weight' => 20,
             'purchase_price' => 100,
@@ -35,7 +35,7 @@ class InventoryTableSeeder extends Seeder
 
         $invt1 = Inventory::create([
             'item_name' => '25 KW generator',
-            'quantity' => 5,
+            'quantity' => 0,
             'cbm' => 12.5,
             'weight' => 25,
             'purchase_price' => 105.5,
@@ -47,7 +47,7 @@ class InventoryTableSeeder extends Seeder
 
         $invt2 = Inventory::create([
             'item_name' => '20 GM lawn machine',
-            'quantity' => 10,
+            'quantity' => 0,
             'cbm' => 15,
             'weight' => 20,
             'purchase_price' => 100,
@@ -55,7 +55,5 @@ class InventoryTableSeeder extends Seeder
             'location_id' => 2,
             'package' => 12
         ]);        
-     
-
     }
 }

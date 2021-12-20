@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\Common\BaseLocationController;
 
-class LocationController extends LocationController
+class LocationController extends BaseLocationController
 {
     //
 }

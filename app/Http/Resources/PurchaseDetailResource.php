@@ -19,8 +19,10 @@ class PurchaseDetailResource extends JsonResource
             'price' => number_format($this->price,2),
             'quantity' => $this->quantity,
             'total_price' => number_format($this->total_price,2),
-            'location_name' => $this->location->name,
-            'item_name' => $this->inventory->item_name,
+            'location' => $this->location->name,
+            'location_id' => $this->location_id,
+            'inventory' => $this->inventory->item_name,
+            'inventory_id'=> $this->inventory_id,
         ];
     }
 }

@@ -81,6 +81,19 @@ class BaseInventoryController extends Controller
     }
 
     /////////////////////////////////////////////////////////////////////////  
+    public function locationBasedInventory($id)
+    {
+        $inventories = Inventory::where('location_id',$id)->get();
+        return response() -> json([
+            'status' => 1,
+            'message' => 'List of all inventories in mentioned location',
+            'data' => [
+                'inventories' => InventoryResource::collection($inventories)
+            ]
+        ], 200);        
+    }
+
+    /////////////////////////////////////////////////////////////////////////  
     private function saveDate(Inventory $item, Request $request)    
     {
         $item->item_name        = $request->item_name;

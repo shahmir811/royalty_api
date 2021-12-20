@@ -20,9 +20,11 @@ class CreatePurchasesTable extends Migration
             $table->boolean('local_purchase'); // true / false
 
             $table->foreignId('user_id');
+            $table->foreignId('status_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
        
         });
     }

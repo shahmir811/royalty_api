@@ -16,7 +16,8 @@ class Purchase extends Model
         'total_amount',
         'local_purchase',
         'purchase_invoice_no',
-        'user_id'
+        'user_id',
+        'status_id'
     ];      
 
     public function user()
@@ -24,6 +25,11 @@ class Purchase extends Model
         return $this->belongsTo(User::class);
     }    
     
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }    
+     
     public function purchases()
     {
         return $this->hasMany(PurchaseDetail::class);
@@ -33,9 +39,14 @@ class Purchase extends Model
     {
         parent::boot();
 
+        
         static::creating(function (Purchase $purchase) {
+            
+            $pending_status_id = Status::where('name', '=', 'Pending')->where('type', '=', 'purchase')->pluck('id');
+
             $purchase->purchase_invoice_no = time() . 'p';
             $purchase->user_id = Auth::id();
+            $purchase->status_id = $pending_status_id[0];
         });
     }
 

@@ -18,6 +18,7 @@ class Inventory extends Model
         'cbm',
         'weight',
         'purchase_price',
+        'avg_price',
         'sale_price',
         'location_id',
     ];     
