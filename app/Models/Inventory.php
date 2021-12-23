@@ -32,6 +32,11 @@ class Inventory extends Model
     {
         return $this->belongsTo(Location::class)->withTrashed();
     }     
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }     
     
     public static function boot()
     {

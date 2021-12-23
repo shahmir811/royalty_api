@@ -76,6 +76,12 @@ Route::group([
     Route::post('update-purchase/{id}', 'PurchaseController@updatePurchase');
     Route::delete('remove-purchased-item/{id}', 'PurchaseController@removePurchasedItem');
 
+    // Web Admin Items Controller
+    Route::get('items-list', 'ItemsController@index');
+    Route::post('add-item', 'ItemsController@store');
+    Route::post('update-item/{id}', 'ItemsController@update');
+    Route::delete('remove-item/{id}', 'ItemsController@delete');
+
 });
 
 
@@ -111,8 +117,15 @@ Route::group([
     // Web Employee PredefinedValue Controller    
     Route::get('tax-details', 'PredefinedValueController@taxDetails');
 
-    // Web Admin Purchases Controller
+    // Web Employee Purchases Controller
     Route::get('purchase-list', 'PurchaseController@purchaseList');
     Route::post('add-purchase', 'PurchaseController@addNewPurchase');    
+
+    // Web Employee Items Controller
+    Route::get('items-list', 'ItemsController@index');
+    Route::post('add-item', 'ItemsController@store');
+    Route::post('update-item/{id}', 'ItemsController@update');
+    Route::delete('remove-item/{id}', 'ItemsController@delete');
+
 
 });

@@ -15,16 +15,10 @@ class CreateInventoriesTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('item_name');
             $table->integer('quantity');
-            $table->text('description')->nullable();
-            $table->string('package');
-            $table->double('cbm', 6, 2);
-            $table->double('weight', 6, 2);
             $table->double('purchase_price', 10, 2);
             $table->double('avg_price', 10, 2);
             $table->double('sale_price', 10, 2);           
-            
             $table->foreignId('location_id');
             $table->softDeletes();
             $table->timestamps();

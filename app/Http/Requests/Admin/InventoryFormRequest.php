@@ -24,11 +24,11 @@ class InventoryFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'item_name' => 'required',
+            // 'item_name' => 'required',
+            // 'package' => 'required',
+            // 'cbm' => 'required|numeric',
+            // 'weight' => 'required|numeric',    
             'quantity' => 'required|integer',
-            'package' => 'required',
-            'cbm' => 'required|numeric',
-            'weight' => 'required|numeric',    
             'purchase_price' => 'required|numeric',    
             'sale_price' => 'required|numeric',   
             'location_id' => 'required|integer', 
@@ -38,7 +38,7 @@ class InventoryFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'item_name.required' => 'Mention item name',
+            // 'item_name.required' => 'Mention item name',
             'location_id.required' => 'Select location from dropdown',
             'purchase_price.required' => 'Item purchase price is required',
             'sale_price.required' => 'Item sale price is required',
