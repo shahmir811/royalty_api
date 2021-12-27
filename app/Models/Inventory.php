@@ -11,35 +11,22 @@ class Inventory extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'item_name',
+        'item_id',
         'quantity',
-        'description',
-        'package',
-        'cbm',
-        'weight',
         'purchase_price',
         'avg_price',
         'sale_price',
         'location_id',
-    ];     
-
-    public function purchase_details()
-    {
-        return $this->hasMany(PurchaseDetail::class);
-    }      
+    ];         
     
     public function location()
     {
         return $this->belongsTo(Location::class)->withTrashed();
     }     
-    
-    public static function boot()
-    {
-        parent::boot();
 
-        static::creating(function (Inventory $invt) {
-            $invt->avg_price = 0;
-        });
-    }    
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }     
 
 }

@@ -19,12 +19,10 @@ class CreatePurchaseDetailsTable extends Migration
             $table->integer('quantity');
             $table->double('total_price', 10, 2);
 
-            $table->foreignId('inventory_id');
             $table->foreignId('purchase_id');
             $table->foreignId('location_id');                    
             $table->timestamps();
 
-            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade');
             $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');                     
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');  
         });

@@ -9,9 +9,9 @@ class PurchaseDetail extends Model
 {
     use HasFactory;
 
-    public function inventory()
+    public function item()
     {
-        return $this->belongsTo(Inventory::class);
+        return $this->belongsTo(Item::class);
     }       
     
     public function purchase()

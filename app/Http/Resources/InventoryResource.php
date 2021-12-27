@@ -16,12 +16,13 @@ class InventoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'item_name' => $this->item_name,
+            'item_id' => $this->item_id,
+            'item_name' => $this->item->name,
             'quantity' => $this->quantity,
-            'description' => $this->description,
-            'package' => $this->package,
-            'cbm' => number_format($this->cbm,2),
-            'weight' => number_format($this->weight,2),
+            // 'description' => $this->description,
+            // 'package' => $this->package,
+            // 'cbm' => number_format($this->cbm,2),
+            // 'weight' => number_format($this->weight,2),
             'purchase_price' => number_format($this->purchase_price,2),
             'sale_price' => number_format($this->sale_price,2),
             'avg_price' => number_format($this->avg_price,2),

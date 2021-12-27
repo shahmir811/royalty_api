@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PredefinedValueTableSeeder::class);
 
+        $this->call(ItemsTableSeeder::class);
+        
         $this->call(InventoryTableSeeder::class);
 
         // $this->call(PurchaseSeeder::class);

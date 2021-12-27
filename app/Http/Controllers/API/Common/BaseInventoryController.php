@@ -27,10 +27,10 @@ class BaseInventoryController extends Controller
     {
         $item = new Inventory;
 
-        if($this->itemAlreadyInWarehouse($request->item_name, $request->location_id)) {
+        if($this->itemAlreadyInWarehouse($request->item_id, $request->location_id)) {
             return response() -> json([
                 'status' => 0,
-                'message' => 'Item already in mentioned location',
+                'message' => 'Item is already in mentioned location',
                 'errors' => [
                     "item_name" => ['Item already exists in this location']
                 ] 
@@ -47,8 +47,6 @@ class BaseInventoryController extends Controller
                 ]
             ], 201);         
         }
-
-
                 
     }
 
@@ -96,23 +94,24 @@ class BaseInventoryController extends Controller
     /////////////////////////////////////////////////////////////////////////  
     private function saveDate(Inventory $item, Request $request)    
     {
-        $item->item_name        = $request->item_name;
+        $item->item_id          = $request->item_id;
         $item->quantity         = $request->quantity;
-        $item->description      = $request->description;
-        $item->package          = $request->package;
-        $item->cbm              = $request->cbm;
-        $item->weight           = $request->weight;
+        // $item->description      = $request->description;
+        // $item->package          = $request->package;
+        // $item->cbm              = $request->cbm;
+        // $item->weight           = $request->weight;
         $item->purchase_price   = $request->purchase_price;
+        $item->avg_price        = $request->avg_price;
         $item->sale_price       = $request->sale_price;
         $item->location_id      = $request->location_id;
         $item->save();
     }
 
     /////////////////////////////////////////////////////////////////////////  
-    private function itemAlreadyInWarehouse($item, $location)
+    private function itemAlreadyInWarehouse($item_id, $location)
     {
         $location_id = Location::findOrFail($location)->pluck('id');
-        $record = Inventory::where('item_name', $item)->where('location_id', $location_id)->count();
+        $record = Inventory::where('item_id', $item_id)->where('location_id', $location_id)->count();
         return $record ? true : false;
     }
     
