@@ -75,6 +75,8 @@ Route::group([
     Route::get('show-purchase/{id}', 'PurchaseController@showPurchase');
     Route::post('update-purchase/{id}', 'PurchaseController@updatePurchase');
     Route::delete('remove-purchased-item/{id}', 'PurchaseController@removePurchasedItem');
+    Route::get('change-purchase-status/{id}', 'PurchaseController@changePurchaseStatus');
+    Route::get('remove-purchase-record/{id}', 'PurchaseController@removePurchaseRecord');
 
     // Web Admin Items Controller
     Route::get('items-list', 'ItemsController@index');

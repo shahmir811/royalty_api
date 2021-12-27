@@ -35,6 +35,14 @@ class ItemsTableSeeder extends Seeder
             'package' => 4,
             'description' => 'Used for water boaring'
         ]);  
+
+        $item1 = Item::create([
+            'name' => 'Guardian 26kW Home Backup Generator WiFi-Enabled',
+            'cbm' => 25,
+            'weight' => 33,
+            'package' => 8,
+            'description' => 'Generac’s 26kW home standby generator can start all of your home’s large appliances, ensuring your home remains a sanctuary for you and your family.'
+        ]);          
         
                 
         

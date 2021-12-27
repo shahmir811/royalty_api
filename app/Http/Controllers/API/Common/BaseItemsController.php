@@ -12,7 +12,7 @@ class BaseItemsController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
+        $items = Item::orderBy('name', 'asc')->get();
         return response() -> json([
             'status' => 1,
             'message' => 'List of all items',
