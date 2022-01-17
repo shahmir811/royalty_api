@@ -6,6 +6,8 @@ use Auth;
 use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Helper\Seed;
+use Illuminate\Database\Seeder;
 
 class Purchase extends Model
 {
@@ -43,10 +45,14 @@ class Purchase extends Model
         static::creating(function (Purchase $purchase) {
             
             $pending_status_id = Status::where('name', '=', 'Pending')->where('type', '=', 'purchase')->pluck('id');
-
-            $purchase->purchase_invoice_no = time() . 'p';
-            $purchase->user_id = Auth::id();
             $purchase->status_id = $pending_status_id[0];
+
+            if (!Seed::isRunning()) {
+                // do something only when the seeder is not running
+                $purchase->purchase_invoice_no = time() . 'p';
+                $purchase->user_id = Auth::id();
+            }
+
         });
     }
 

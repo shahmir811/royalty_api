@@ -84,6 +84,15 @@ Route::group([
     Route::post('update-item/{id}', 'ItemsController@update');
     Route::delete('remove-item/{id}', 'ItemsController@delete');
 
+    // Web Admin Purchases Controller
+    Route::get('sales-list', 'SaleController@index');
+    Route::post('add-sale', 'SaleController@addNewSale');
+    Route::get('show-sale-details/{id}', 'SaleController@showSaleDetails');
+    Route::get('update-sale-detail/{id}', 'SaleController@updateSaleRecord');    
+    Route::get('all-sales-statuses', 'SaleController@fetchAllSalesStatus');
+    Route::post('update-sale-data/{id}', 'SaleController@updateSaleRecord');
+    Route::get('get-latest-sale-invoice', 'SaleController@getLatestSaleInvoice');
+
 });
 
 

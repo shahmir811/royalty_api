@@ -112,7 +112,7 @@ class BaseInventoryController extends Controller
     {
         $location_id = Location::findOrFail($location)->pluck('id');
         $record = Inventory::where('item_id', $item_id)->where('location_id', $location_id)->count();
-        return $record ? true : false;
+        return $record != 0 ? true : false;
     }
     
 }

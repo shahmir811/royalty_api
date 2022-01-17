@@ -15,15 +15,21 @@ class CreateSaleDetailsTable extends Migration
     {
         Schema::create('sale_details', function (Blueprint $table) {
             $table->id();
-            $table->string('transaction_id')->unique();
-            $table->double('amount', 10, 2);
 
-            $table->foreignId('user_id');
-            $table->foreignId('credit_id');            
+            $table->double('avg_price', 10, 2);
+            $table->double('sale_price', 10, 2);
+            $table->integer('quantity');        
+            
+            $table->double('total_avg_price', 10, 2);
+            $table->double('total_sale_price', 10, 2);
+
+            $table->foreignId('sale_id');
+            $table->foreignId('location_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('credit_id')->references('id')->on('credits')->onDelete('cascade');  
+            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
+
         });
     }
 
