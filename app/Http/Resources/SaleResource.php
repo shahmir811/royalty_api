@@ -19,6 +19,7 @@ class SaleResource extends JsonResource
             'id'                => $this->id,
             'sale_invoice_no'   => $this->sale_invoice_no,
             'type'              => $this->type,
+            'proper_invoice'    => $this->proper_invoice,
             'customer_id'       => $this->customer_id,
             'customer_name'     => $this->customer->name,
             'total_avg_price'   => number_format($this->total_avg_price,2),
@@ -33,7 +34,15 @@ class SaleResource extends JsonResource
             'status'            => $this->status->name,
             'created_by'        => $this->user->name,
             'details'           => SaleDetailResource::collection($this->sales),
+            // 'margin'            => !$this->total_avg_price || !$this->total_sale_price ? 0 : ($this->total_sale_price - $this->total_avg_price) / $this->total_avg_price * 100,
+            'margin'            => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateMargin($this->total_sale_price, $this->total_avg_price),
             'created_at'        => date("d M Y, h:i A", strtotime($this->created_at)),    
         ];
+    }
+
+    private function calculateMargin($sale_price, $avg_price)
+    {
+        $result = ($sale_price - $avg_price) / $avg_price * 100;
+        return number_format($result,2);
     }
 }

@@ -52,14 +52,18 @@ class Sale extends Model
         static::creating(function (Sale $sale) {
             $pending_status_id      = Status::where('name', '=', 'Pending')->where('type', '=', 'sales')->pluck('id');            
             $sale->status_id        = $pending_status_id[0];
+            $condition              = $sale->type == 'export' || ($sale->type == 'local' && $sale->tax_percent == 5);
+            $sale->proper_invoice   = $condition ? 1 : 0;
+            // $sale->proper_invoice   = 1;
+
 
             if($sale->quotation) {
                 $sale->sale_invoice_no = null;
 
             } else {
-                $condition              = $sale->type == 'export' || ($sale->type == 'import' && $sale->tax_percent != '5');
+                // $condition              = $sale->type == 'export' || ($sale->type == 'local' && $sale->tax_percent == '5');
                 $sale->sale_invoice_no  = $condition ? $sale->getLatestSaleInvoiceNo() : time() . 's';  
-                $sale->proper_invoice   = $condition ? 1 : 0;
+                // $sale->proper_invoice   = $condition ? 1 : 0;
             }
 
         });

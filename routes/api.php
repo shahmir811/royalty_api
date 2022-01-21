@@ -88,10 +88,13 @@ Route::group([
     Route::get('sales-list', 'SaleController@index');
     Route::post('add-sale', 'SaleController@addNewSale');
     Route::get('show-sale-details/{id}', 'SaleController@showSaleDetails');
-    Route::get('update-sale-detail/{id}', 'SaleController@updateSaleRecord');    
+    // Route::get('update-sale-detail/{id}', 'SaleController@updateSaleRecord');    
     Route::get('all-sales-statuses', 'SaleController@fetchAllSalesStatus');
     Route::post('update-sale-data/{id}', 'SaleController@updateSaleRecord');
-    Route::get('get-latest-sale-invoice', 'SaleController@getLatestSaleInvoice');
+    Route::get('get-sale-invoice/{id}', 'SaleController@getSaleInvoice'); // id => saleId
+    Route::post('add-sale-detail-item-data', 'SaleController@addSaleDetailItem');
+    Route::post('update-sale-detail-item-data/{id}', 'SaleController@updateSaleDetailItem');
+    Route::get('remove-sale-detail-item/{id}', 'SaleController@removeSaleDetailItem');
 
 });
 
