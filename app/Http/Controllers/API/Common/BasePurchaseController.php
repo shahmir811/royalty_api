@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Common;
 
+use PDF;
 use App\Models\{Purchase, PurchaseDetail, Inventory, Status};
 use App\Http\Resources\PurchaseResource;
 use App\Http\Controllers\Controller;
@@ -132,6 +133,13 @@ class BasePurchaseController extends Controller
         ], 200);             
 
         
+    }
+
+    public function printPurchaseDetails($id)
+    {
+        $pdf = PDF::loadView('pdfs.purchaseDetails', compact('id'));
+        $pdf->setPaper('a4' , 'portrait');
+        return $pdf->output();  
     }
 
     private function addPurchaseDetails($purchase_id, $data)

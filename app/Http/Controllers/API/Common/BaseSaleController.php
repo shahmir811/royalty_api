@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Common;
 
 use Auth;
+use PDF;
 use App\Models\{Sale, SaleDetail, Status, Inventory};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -178,6 +179,13 @@ class BaseSaleController extends Controller
             'message' => 'Sale Detail Item has been removed',
         ], 200);            
 
+    }
+
+    public function printSaleDetails($id)
+    {
+        $pdf = PDF::loadView('pdfs.saleDetails', compact('id'));
+        $pdf->setPaper('a4' , 'portrait');
+        return $pdf->output();        
     }
 
     private function updateInventory($sale_id)
