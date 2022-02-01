@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Helper\Seed;
 
 class Sale extends Model
 {
@@ -54,16 +55,12 @@ class Sale extends Model
             $sale->status_id        = $pending_status_id[0];
             $condition              = $sale->type == 'export' || ($sale->type == 'local' && $sale->tax_percent == 5);
             $sale->proper_invoice   = $condition ? 1 : 0;
-            // $sale->proper_invoice   = 1;
-
 
             if($sale->quotation) {
                 $sale->sale_invoice_no = null;
 
             } else {
-                // $condition              = $sale->type == 'export' || ($sale->type == 'local' && $sale->tax_percent == '5');
                 $sale->sale_invoice_no  = $condition ? $sale->getLatestSaleInvoiceNo() : time() . 's';  
-                // $sale->proper_invoice   = $condition ? 1 : 0;
             }
 
         });

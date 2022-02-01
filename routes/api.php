@@ -98,6 +98,11 @@ Route::group([
     Route::get('remove-sale-detail-item/{id}', 'SaleController@removeSaleDetailItem');
     Route::get('print-sale-details/{id}', 'SaleController@printSaleDetails');
 
+    Route::get('get-weekly-sales', 'SaleController@weeklySale');
+    Route::get('get-sales', 'SaleController@getSalesRecord');
+    Route::get('get-sales-between-dates', 'SaleController@getSalesBetweenDates');
+    Route::get('get-yearly-sales', 'SaleController@getYearlySales');
+
 });
 
 

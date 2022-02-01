@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\Common;
 
 use Auth;
 use PDF;
-use App\Models\{Sale, SaleDetail, Status, Inventory};
+use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\{SaleResource, StatusResource, SaleDetailResource};
@@ -14,7 +14,16 @@ class BaseSaleController extends Controller
 {
     public function index()
     {
-        $records = Sale::orderBy('created_at', 'desc')->orderBy('created_at', 'desc')->get();
+        $showTax = PredefinedValue::findOrFail(1);
+
+        $records;
+
+        if($showTax->show_tax) {
+            $records = Sale::orderBy('created_at', 'desc')->get();
+        } else {
+            $records = Sale::where('proper_invoice', '=', 1)->orderBy('created_at', 'desc')->get();
+        }
+
         return response() -> json([
             'status' => 1,
             'message' => 'Sales list',
@@ -78,8 +87,6 @@ class BaseSaleController extends Controller
     public function updateSaleRecord (SaleRequest $request, $id)
     {
         $sale                       = Sale::findOrFail($id);
-        // $sale->total_sale_price     = $request->total_sale_price;
-        // $sale->total_avg_price      = $request->total_avg_price;
         $sale->sale_invoice_no      = $request->sale_invoice_no;
         $sale->extra_charges        = $request->extra_charges;
         $sale->total_tax            = $request->total_tax;

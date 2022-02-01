@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\{Auth, User, Purchase, PurchaseDetail };
+use App\Models\{User, Purchase, PurchaseDetail };
 use Illuminate\Database\Seeder;
 
 class PurchaseSeeder extends Seeder
@@ -68,6 +68,34 @@ class PurchaseSeeder extends Seeder
         $detail1->item_id = 2;
         $detail1->location_id = 2;
         $detail1->purchase_id = $purchase2->id;
+        $detail1->save();      
+        
+        ////////////////////////////////////////////////////////////////
+        
+        $purchase3 = new Purchase;
+        $purchase3->local_purchase = 0;
+        $purchase3->total_amount = 2500;
+        $purchase3->user_id = $user->id;
+        $purchase3->purchase_invoice_no = time() . '2p';
+        $purchase3->save();
+
+
+        $detail1 = new PurchaseDetail;
+        $detail1->price = 100;
+        $detail1->quantity = 10;
+        $detail1->total_price = 1000;
+        $detail1->item_id = 3;
+        $detail1->location_id = 1;
+        $detail1->purchase_id = $purchase3->id;
+        $detail1->save();
+
+        $detail1 = new PurchaseDetail;
+        $detail1->price = 25;
+        $detail1->quantity = 10;
+        $detail1->total_price = 250;
+        $detail1->item_id = 4;
+        $detail1->location_id = 2;
+        $detail1->purchase_id = $purchase3->id;
         $detail1->save();              
 
     }

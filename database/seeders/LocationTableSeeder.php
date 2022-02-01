@@ -22,6 +22,11 @@ class LocationTableSeeder extends Seeder
         $location1 = Location::create([
             'name' => 'Warehouse store, Abu Dhabi',
             'contact_no' => '+971 500 123456',
-        ]);        
+        ]);       
+        
+        $location1 = Location::create([
+            'name' => 'Zhob Balochistan, Pakistan',
+            'contact_no' => '+92 321 1012365',
+        ]);               
     }
 }

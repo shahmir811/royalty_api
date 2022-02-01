@@ -7,7 +7,6 @@ use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Helper\Seed;
-use Illuminate\Database\Seeder;
 
 class Purchase extends Model
 {

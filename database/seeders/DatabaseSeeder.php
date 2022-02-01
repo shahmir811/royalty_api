@@ -34,5 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(InventoryTableSeeder::class);
 
         $this->call(PurchaseSeeder::class);
+
+        $this->call(SaleSeeder::class);        
     }
 }
