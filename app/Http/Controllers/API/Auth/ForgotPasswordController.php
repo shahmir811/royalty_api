@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\Auth;
 
 use Hash;
+use Mail;
 use App\Models\User;
+use App\Mail\ForgotPassword;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -25,11 +27,10 @@ class ForgotPasswordController extends Controller
             ], 200);   
         } 
 
-        if($user->role->name == 'admin') {
-            $user->verification_key = $verification_key;
-            $user->save();
-            Mail::to($user->email)->send(new ForgotPassword($user));
-        }
+
+        $user->verification_key = $verification_key;
+        $user->save();
+        Mail::to($user->email)->send(new ForgotPassword($user));
 
 
         return response() -> json([

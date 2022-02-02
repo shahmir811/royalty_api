@@ -69,6 +69,17 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }    
+    }  
+    
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (User $user) {
+            $name = strtolower($user->name);
+            $name = preg_replace('/\s+/', '-', $name);
+            $user->slug = strtolower($name) . '-' . time();
+        });
+    }        
 
 }

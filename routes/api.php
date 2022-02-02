@@ -20,8 +20,8 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
 
-    Route::post('/userForgotPassword', 'ForgotPasswordController@userForgotPassword');
-    Route::post('/resetPassword', 'ForgotPasswordController@resetPassword');    
+    // Route::post('/userForgotPassword', 'ForgotPasswordController@userForgotPassword');
+    // Route::post('/resetPassword', 'ForgotPasswordController@resetPassword');    
 
 });
 
@@ -148,5 +148,16 @@ Route::group([
     Route::post('update-item/{id}', 'ItemsController@update');
     Route::delete('remove-item/{id}', 'ItemsController@delete');
 
+
+});
+
+
+Route::group([
+    'namespace' => 'API\Auth',
+
+], function () {
+
+    Route::post('/userForgotPassword', 'ForgotPasswordController@userForgotPassword');
+    Route::post('/resetPassword', 'ForgotPasswordController@resetPassword');    
 
 });
