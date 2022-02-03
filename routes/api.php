@@ -20,9 +20,6 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
 
-    // Route::post('/userForgotPassword', 'ForgotPasswordController@userForgotPassword');
-    // Route::post('/resetPassword', 'ForgotPasswordController@resetPassword');    
-
 });
 
 // Web Admin Routes
@@ -98,10 +95,20 @@ Route::group([
     Route::get('remove-sale-detail-item/{id}', 'SaleController@removeSaleDetailItem');
     Route::get('print-sale-details/{id}', 'SaleController@printSaleDetails');
 
+
+    // Web Admin dashboard charts
     Route::get('get-weekly-sales', 'SaleController@weeklySale');
     Route::get('get-sales', 'SaleController@getSalesRecord');
     Route::get('get-sales-between-dates', 'SaleController@getSalesBetweenDates');
     Route::get('get-yearly-sales', 'SaleController@getYearlySales');
+
+
+    // Web Admin Customer Credit
+    Route::get('get-all-customers-credit', 'CustomerCreditController@getAllCustomersCreditList');
+    Route::get('customer-credit-details/{customer_id}', 'CustomerCreditController@getCustomerCreditDetails');
+    Route::get('credit-payment-details/{credit_id}', 'CustomerCreditController@getCreditPaymentDetails');
+    Route::get('print-payment-details/{credit_id}', 'CustomerCreditController@printPaymentDetails');
+    Route::post('add-payment/{credit_id}', 'CustomerCreditController@addPayment');
 
 });
 

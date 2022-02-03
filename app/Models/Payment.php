@@ -9,6 +9,12 @@ class Payment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'amount',
+        'credit_id',
+        'user_id',
+    ];  
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -17,7 +23,16 @@ class Payment extends Model
     public function credit()
     {
         return $this->belongsTo(Credit::class);
-    }       
+    }
+    
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Payment $payment) {
+            $payment->transaction_id = time() . 't';      
+        });
+    }    
     
     
 }

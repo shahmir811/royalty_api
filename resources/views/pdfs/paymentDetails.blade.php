@@ -1,0 +1,2 @@
+<p>I acknowledge that Mr/Mrs <strong>{{ $credit->customer->name }}</strong> has paid total amount of <strong>{{ $credit->due_amount }}</strong> out of <strong>{{ $credit->total_amount_paid }}</strong>. His last payment of <strong>{{ $payment->amount }}</strong> has been received by <strong>{{ $payment->user->name }}</strong> on <strong>{{ date("d M Y, h:i A", strtotime($payment->created_at)) }}</strong> .</p>
+<p>Last payment transaction id: <strong>{{ $payment->transaction_id }}</strong></p>

@@ -24,7 +24,7 @@ class CustomerTableSeeder extends Seeder
             'mobile_no_dubai' => '+971 100 544335',
             'mobile_no_country' => '+61 485 273062',
             'cargo_address' => $faker->address(),
-            'credit_amount' => 0,
+            'credit_amount' => 1500,
         ]);
 
         $customer1 = Customer::create([
@@ -34,7 +34,7 @@ class CustomerTableSeeder extends Seeder
             'mobile_no_dubai' => '+971 513 125365',
             'mobile_no_country' => '+44 7860 980 202',
             'cargo_address' => $faker->address(),
-            'credit_amount' => 0,
+            'credit_amount' => 1500,
         ]);        
 
         $customer1 = Customer::create([
@@ -44,7 +44,7 @@ class CustomerTableSeeder extends Seeder
             'mobile_no_dubai' => '+971 555 654123',
             'mobile_no_country' => '+966 123 789456',
             'cargo_address' => $faker->address(),
-            'credit_amount' => 0,
+            'credit_amount' => 1180,
         ]);                
 
     }

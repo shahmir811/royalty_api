@@ -9,6 +9,13 @@ class Credit extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'total_amount_paid',
+        'due_amount',
+        'customer_id',
+        'sale_id',
+    ];     
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
