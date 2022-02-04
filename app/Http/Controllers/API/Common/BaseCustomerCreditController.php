@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API\Common;
 
 use PDF;
 use Auth;
-use App\Models\{Customer, Credit, Payment};
+use App\Models\{Customer, Credit, Payment, Sale};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\CreditPaymentRequest;
-use App\Http\Resources\{CustomerResource, CustomerCreditResource, CreditPaymentResource};
+use App\Http\Requests\Admin\{CreditPaymentRequest, CustomerCreditFormRequest};
+use App\Http\Resources\{CustomerResource, CustomerCreditResource, CreditPaymentResource, CustomerSaleResource};
 
 class BaseCustomerCreditController extends Controller
 {
@@ -36,7 +36,8 @@ class BaseCustomerCreditController extends Controller
             'customer_id'   => $customer_id,
             'customer_name' => $customer->name,
             'data' => [
-                'credits' => CustomerCreditResource::collection($credits)
+                'credits' => CustomerCreditResource::collection($credits),
+                'sales'   => $this->customerSalesList($customer_id), // returns sales with 0 credit record.
             ]
         ], 200);        
     }
@@ -87,11 +88,51 @@ class BaseCustomerCreditController extends Controller
     public function printPaymentDetails($credit_id)
     {
         $credit  = Credit::findOrFail($credit_id);
+        $sum     = $credit->payments->sum('amount');
         $payment = Payment::where('credit_id', '=', $credit_id)->orderBy('created_at', 'desc')->first();
         
-        $pdf = PDF::loadView('pdfs.paymentDetails', compact('credit', 'payment'));
+        $pdf = PDF::loadView('pdfs.paymentDetails', compact('credit', 'payment', 'sum'));
         $pdf->setPaper('a4' , 'portrait');
         return $pdf->output();  
+    }
+
+    public function addNewCustomerCredit(CustomerCreditFormRequest $request, $customer_id)
+    {
+        $credit                     = new Credit;
+        $credit->customer_id        = $customer_id;
+        $credit->sale_id            = $request->sale_id;
+        $credit->due_amount         = $request->due_amount;
+        $credit->total_amount_paid  = $request->total_amount_paid;
+        $credit->save();
+
+        return response() -> json([
+            'status'        => 1,
+            'message'       => 'New customer credit record is added',
+            'data' => [
+                'credit' => new CustomerCreditResource($credit),
+                'sales'  => $this->customerSalesList($customer_id), // returns sales with 0 credit record.
+            ]
+        ], 200);                
+
+
+    }
+
+    private function customerSalesList($customer_id)
+    {
+        $records = [];
+        $sales = Sale::where('customer_id', '=', $customer_id)->whereNotNull('sale_invoice_no')->pluck('id')->toArray();
+
+        for ($i=0; $i < sizeof($sales); $i++) { 
+            $credit = Credit::where('sale_id', '=', $sales[$i])->exists();
+
+            if(!$credit) {
+                $data = Sale::findOrFail($sales[$i]);
+                array_push($records, new CustomerSaleResource($data));
+            }
+        }
+
+        return $records;
+     
     }
 
 

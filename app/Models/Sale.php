@@ -68,7 +68,7 @@ class Sale extends Model
 
     private static function getLatestSaleInvoiceNo()
     {
-        $data = self::where('proper_invoice', '=', 1)->latest()->first();
+        $data = self::where('proper_invoice', '=', 1)->whereNotNull('sale_invoice_no')->latest()->first();
         return $data ? $data->sale_invoice_no + 1 : env('TAX_INVOICE_NO_START', 500);
     }
 

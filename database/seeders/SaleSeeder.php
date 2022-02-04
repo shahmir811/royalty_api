@@ -20,7 +20,7 @@ class SaleSeeder extends Seeder
         $user = User::findOrFail(3);
 
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////  SALE # 1   /////////////////////////////////////////////////////////
 
         $sale1                       = new Sale;
         $sale1->total_sale_price     = 2500;
@@ -51,7 +51,7 @@ class SaleSeeder extends Seeder
         $detail1->save();          
         
         
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////  SALE # 2   ///////////////////////////////////////////////////////
 
         $sale2                       = new Sale;
         $sale2->total_sale_price     = 1854;
@@ -111,7 +111,7 @@ class SaleSeeder extends Seeder
         $detail3->save();      
          
 
-        ///////////////////////////////////////////////////////////////////////////////////////////        
+        ///////////////////////////////////  SALE # 3   ////////////////////////////////////////////////////////        
 
 
         $sale3                       = new Sale;
@@ -172,7 +172,7 @@ class SaleSeeder extends Seeder
         $detail3->save();       
         
         
-        ///////////////////////////////////////////////////////////////////////////////////////////        
+        ////////////////////////////////////  SALE # 4   ///////////////////////////////////////////////////////        
 
 
         $sale4                       = new Sale;
@@ -232,6 +232,189 @@ class SaleSeeder extends Seeder
         $detail3->sale_id            = $sale4->id;
         $detail3->save();              
 
+
+
+        ///////////////////////////////////////////  SALE # 5   ////////////////////////////////////////////////        
+
+
+        $sale3                       = new Sale;
+        $sale3->total_sale_price     = 1180;
+        $sale3->total_avg_price      = 1116;
+        $sale3->extra_charges        = 250;
+        $sale3->total_tax            = 0;
+        $sale3->tax_percent          = 0;
+        $sale3->contact_no           = '+971 513 125365';
+        $sale3->shipping_location    = $faker->address();
+        $sale3->type                 = 'export';
+        $sale3->quotation            = 0;
+        $sale3->user_id              = $user->id;
+        $sale3->customer_id          = 3;
+        $sale3->created_at           =  time() + 3;
+        $sale3->save();
+
+        ///////////////////////////////////
+        $detail1                     = new SaleDetail;
+        $detail1->avg_price          = 53;
+        $detail1->sale_price         = 55;
+        $detail1->quantity           = 10;
+        
+        $detail1->total_avg_price    = 53 * 10;
+        $detail1->total_sale_price   = 55 * 10;
+        
+        $detail1->location_id        = 2;
+        $detail1->inventory_id       = 6;
+        $detail1->sale_id            = $sale3->id;
+        $detail1->save();      
+        
+        ///////////////////////////////////
+        $detail2                     = new SaleDetail;
+        $detail2->avg_price          = 29;
+        $detail2->sale_price         = 35;
+        $detail2->quantity           = 5;
+        
+        $detail2->total_avg_price    = 29 * 5;
+        $detail2->total_sale_price   = 35 * 5;
+        
+        $detail2->location_id        = 3;
+        $detail2->inventory_id       = 7;
+        $detail2->sale_id            = $sale3->id;
+        $detail2->save();      
+        
+        ///////////////////////////////////
+        $detail3                     = new SaleDetail;
+        $detail3->avg_price          = 63;
+        $detail3->sale_price         = 65;
+        $detail3->quantity           = 7;
+        
+        $detail3->total_avg_price    = 63 * 7;
+        $detail3->total_sale_price   = 65 * 7;
+        
+        $detail3->location_id        = 3;
+        $detail3->inventory_id       = 8;
+        $detail3->sale_id            = $sale3->id;
+        $detail3->save();    
+        
+        ////////////////////////////////////////  SALE # 6   ///////////////////////////////////////////////////        
+
+
+        $sale3                       = new Sale;
+        $sale3->total_sale_price     = 1180;
+        $sale3->total_avg_price      = 1116;
+        $sale3->extra_charges        = 250;
+        $sale3->total_tax            = 0;
+        $sale3->tax_percent          = 0;
+        $sale3->contact_no           = '+971 513 125365';
+        $sale3->shipping_location    = $faker->address();
+        $sale3->type                 = 'export';
+        $sale3->quotation            = 0;
+        $sale3->user_id              = $user->id;
+        $sale3->customer_id          = 1;
+        $sale3->created_at           =  time() + 5;
+        $sale3->save();
+
+        ///////////////////////////////////
+        $detail1                     = new SaleDetail;
+        $detail1->avg_price          = 53;
+        $detail1->sale_price         = 55;
+        $detail1->quantity           = 10;
+        
+        $detail1->total_avg_price    = 53 * 10;
+        $detail1->total_sale_price   = 55 * 10;
+        
+        $detail1->location_id        = 2;
+        $detail1->inventory_id       = 6;
+        $detail1->sale_id            = $sale3->id;
+        $detail1->save();      
+        
+        ///////////////////////////////////
+        $detail2                     = new SaleDetail;
+        $detail2->avg_price          = 29;
+        $detail2->sale_price         = 35;
+        $detail2->quantity           = 5;
+        
+        $detail2->total_avg_price    = 29 * 5;
+        $detail2->total_sale_price   = 35 * 5;
+        
+        $detail2->location_id        = 3;
+        $detail2->inventory_id       = 7;
+        $detail2->sale_id            = $sale3->id;
+        $detail2->save();      
+        
+        ///////////////////////////////////
+        $detail3                     = new SaleDetail;
+        $detail3->avg_price          = 63;
+        $detail3->sale_price         = 65;
+        $detail3->quantity           = 7;
+        
+        $detail3->total_avg_price    = 63 * 7;
+        $detail3->total_sale_price   = 65 * 7;
+        
+        $detail3->location_id        = 3;
+        $detail3->inventory_id       = 8;
+        $detail3->sale_id            = $sale3->id;
+        $detail3->save();    
+        
+        /////////////////////////////////////////   SALE # 7    //////////////////////////////////////////////////        
+
+
+        $sale3                       = new Sale;
+        $sale3->total_sale_price     = 1180;
+        $sale3->total_avg_price      = 1116;
+        $sale3->extra_charges        = 250;
+        $sale3->total_tax            = 0;
+        $sale3->tax_percent          = 0;
+        $sale3->contact_no           = '+971 513 125365';
+        $sale3->shipping_location    = $faker->address();
+        $sale3->type                 = 'export';
+        $sale3->quotation            = 0;
+        $sale3->user_id              = $user->id;
+        $sale3->customer_id          = 1;
+        $sale3->created_at           =  time() + 6;
+        $sale3->save();
+
+        ///////////////////////////////////
+        $detail1                     = new SaleDetail;
+        $detail1->avg_price          = 53;
+        $detail1->sale_price         = 55;
+        $detail1->quantity           = 10;
+        
+        $detail1->total_avg_price    = 53 * 10;
+        $detail1->total_sale_price   = 55 * 10;
+        
+        $detail1->location_id        = 2;
+        $detail1->inventory_id       = 6;
+        $detail1->sale_id            = $sale3->id;
+        $detail1->save();      
+        
+        ///////////////////////////////////
+        $detail2                     = new SaleDetail;
+        $detail2->avg_price          = 29;
+        $detail2->sale_price         = 35;
+        $detail2->quantity           = 5;
+        
+        $detail2->total_avg_price    = 29 * 5;
+        $detail2->total_sale_price   = 35 * 5;
+        
+        $detail2->location_id        = 3;
+        $detail2->inventory_id       = 7;
+        $detail2->sale_id            = $sale3->id;
+        $detail2->save();      
+        
+        ///////////////////////////////////
+        $detail3                     = new SaleDetail;
+        $detail3->avg_price          = 63;
+        $detail3->sale_price         = 65;
+        $detail3->quantity           = 7;
+        
+        $detail3->total_avg_price    = 63 * 7;
+        $detail3->total_sale_price   = 65 * 7;
+        
+        $detail3->location_id        = 3;
+        $detail3->inventory_id       = 8;
+        $detail3->sale_id            = $sale3->id;
+        $detail3->save();    
+        
+        
 
 
     }

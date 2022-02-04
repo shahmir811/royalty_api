@@ -21,7 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('mobile_no_dubai');
             $table->string('mobile_no_country');
             $table->text('cargo_address')->nullable();
-            $table->double('credit_amount', 10, 2)->default(0);
+            // $table->double('credit_amount', 10, 2)->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
