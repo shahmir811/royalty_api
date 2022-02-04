@@ -17,7 +17,7 @@ class Customer extends Model
         'mobile_no_dubai',
         'mobile_no_country',
         'cargo_address',
-        'credit_amount',
+        // 'credit_amount',
     ]; 
 
     public function credits()

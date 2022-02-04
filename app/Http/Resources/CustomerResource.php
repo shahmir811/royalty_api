@@ -22,7 +22,7 @@ class CustomerResource extends JsonResource
             'mobile_no_dubai' => $this->mobile_no_dubai,
             'mobile_no_country' => $this->mobile_no_country,
             'cargo_address' => $this->cargo_address,
-            'credit_amount' => number_format($this->credit_amount, 2),
+            'credit_amount' => number_format($this->credits->sum('due_amount'), 2),
             'status' => $this->deleted_at ? 'Deactive' : 'Active',
         ];
     }

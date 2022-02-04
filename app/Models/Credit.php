@@ -24,7 +24,12 @@ class Credit extends Model
     public function sale()
     {
         return $this->belongsTo(Sale::class);
-    }        
+    }     
+    
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }         
 
 
 }

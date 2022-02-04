@@ -109,6 +109,9 @@ Route::group([
     Route::get('credit-payment-details/{credit_id}', 'CustomerCreditController@getCreditPaymentDetails');
     Route::get('print-payment-details/{credit_id}', 'CustomerCreditController@printPaymentDetails');
     Route::post('add-payment/{credit_id}', 'CustomerCreditController@addPayment');
+    Route::get('remove-customer-credit-record/{credit_id}', 'CustomerCreditController@removeCustomerCreditRecord');
+    Route::post('add-new-customer-credit/{customer_id}', 'CustomerCreditController@addNewCustomerCredit');
+    // Route::get('customer-sales-list/{customer_id}', 'CustomerCreditController@customerSalesList');
 
 });
 
