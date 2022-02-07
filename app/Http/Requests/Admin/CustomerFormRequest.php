@@ -30,7 +30,7 @@ class CustomerFormRequest extends FormRequest
             'mobile_no_dubai' => 'required',
             'mobile_no_country' => 'required',
             // 'cargo_address' => 'sometimes|required',
-            'credit_amount' => 'sometimes|numeric',                     
+            // 'credit_amount' => 'sometimes|numeric',                     
         ];
     }
 

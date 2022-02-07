@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\Common;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Http\Resources\CustomerResource;
+use App\Http\Resources\{CustomerResource, SaleResource, CustomerCreditResource};
 use App\Http\Requests\Admin\CustomerFormRequest;
 
 class BaseCustomerController extends Controller
@@ -41,12 +41,14 @@ class BaseCustomerController extends Controller
     /////////////////////////////////////////////////////////////////////////  
     public function show($id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::withTrashed()->findOrFail($id);
         return response() -> json([
             'status' => 1,
             'message' => 'Customer details',
             'data' => [
-                'customer' => new CustomerResource($customer)
+                'customer' => new CustomerResource($customer),
+                'credit' => CustomerCreditResource::collection($customer->credits),
+                'sales' => SaleResource::collection($customer->sales),
             ]
         ], 200);                
 
@@ -62,7 +64,7 @@ class BaseCustomerController extends Controller
             'status' => 1,
             'message' => 'Customer deatils updated successfully',
             'data' => [
-                'customer' => new CustomerResource($customer)
+                'customer' => new CustomerResource($customer),
             ]
         ], 200);              
 
@@ -77,7 +79,7 @@ class BaseCustomerController extends Controller
         $customer->mobile_no_dubai     = $request->mobile_no_dubai;
         $customer->mobile_no_country   = $request->mobile_no_country;
         $customer->cargo_address       = $request->cargo_address;
-        $customer->credit_amount       = $request->credit_amount;
+        // $customer->credit_amount       = $request->credit_amount;
         $customer->save();
         
         return;

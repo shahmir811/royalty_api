@@ -83,7 +83,7 @@ Route::group([
     Route::post('update-item/{id}', 'ItemsController@update');
     Route::delete('remove-item/{id}', 'ItemsController@delete');
 
-    // Web Admin Purchases Controller
+    // Web Admin Sales Controller
     Route::get('sales-list', 'SaleController@index');
     Route::post('add-sale', 'SaleController@addNewSale');
     Route::get('show-sale-details/{id}', 'SaleController@showSaleDetails'); 
@@ -111,7 +111,6 @@ Route::group([
     Route::post('add-payment/{credit_id}', 'CustomerCreditController@addPayment');
     Route::get('remove-customer-credit-record/{credit_id}', 'CustomerCreditController@removeCustomerCreditRecord');
     Route::post('add-new-customer-credit/{customer_id}', 'CustomerCreditController@addNewCustomerCredit');
-    // Route::get('customer-sales-list/{customer_id}', 'CustomerCreditController@customerSalesList');
 
 });
 
@@ -150,13 +149,42 @@ Route::group([
 
     // Web Employee Purchases Controller
     Route::get('purchase-list', 'PurchaseController@purchaseList');
-    Route::post('add-purchase', 'PurchaseController@addNewPurchase');    
+    Route::post('add-purchase', 'PurchaseController@addNewPurchase');
+    Route::get('show-purchase/{id}', 'PurchaseController@showPurchase');
+    Route::post('update-purchase/{id}', 'PurchaseController@updatePurchase');
+    Route::delete('remove-purchased-item/{id}', 'PurchaseController@removePurchasedItem');
+    Route::get('change-purchase-status/{id}', 'PurchaseController@changePurchaseStatus');
+    // Route::get('remove-purchase-record/{id}', 'PurchaseController@removePurchaseRecord');
+    Route::get('print-purchase-details/{id}', 'PurchaseController@printPurchaseDetails');
+
 
     // Web Employee Items Controller
     Route::get('items-list', 'ItemsController@index');
     Route::post('add-item', 'ItemsController@store');
     Route::post('update-item/{id}', 'ItemsController@update');
     Route::delete('remove-item/{id}', 'ItemsController@delete');
+
+    // Web Employee Sales Controller
+    Route::get('sales-list', 'SaleController@index');
+    Route::post('add-sale', 'SaleController@addNewSale');
+    Route::get('show-sale-details/{id}', 'SaleController@showSaleDetails'); 
+    Route::get('all-sales-statuses', 'SaleController@fetchAllSalesStatus');
+    Route::post('update-sale-data/{id}', 'SaleController@updateSaleRecord');
+    Route::get('get-sale-invoice/{id}', 'SaleController@getSaleInvoice'); // id => saleId
+    Route::post('add-sale-detail-item-data', 'SaleController@addSaleDetailItem');
+    Route::post('update-sale-detail-item-data/{id}', 'SaleController@updateSaleDetailItem');
+    Route::get('remove-sale-detail-item/{id}', 'SaleController@removeSaleDetailItem');
+    Route::get('print-sale-details/{id}', 'SaleController@printSaleDetails'); 
+    
+    
+    // Web Employee Customer Credit
+    Route::get('get-all-customers-credit', 'CustomerCreditController@getAllCustomersCreditList');
+    Route::get('customer-credit-details/{customer_id}', 'CustomerCreditController@getCustomerCreditDetails');
+    Route::get('credit-payment-details/{credit_id}', 'CustomerCreditController@getCreditPaymentDetails');
+    Route::get('print-payment-details/{credit_id}', 'CustomerCreditController@printPaymentDetails');
+    Route::post('add-payment/{credit_id}', 'CustomerCreditController@addPayment');
+    Route::get('remove-customer-credit-record/{credit_id}', 'CustomerCreditController@removeCustomerCreditRecord');
+    Route::post('add-new-customer-credit/{customer_id}', 'CustomerCreditController@addNewCustomerCredit');
 
 
 });
