@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use Log;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\BackupCron::class,
     ];
 
     /**
@@ -25,6 +27,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        Log::info('Cron job is execute at ' . Carbon::now('Asia/Karachi'));
+
+        $schedule->command('backup:cron')->everyMinute();
     }
 
     /**
