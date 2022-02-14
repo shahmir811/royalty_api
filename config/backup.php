@@ -110,13 +110,13 @@ return [
             /*
              * The filename prefix used for the backup zip file.
              */
-            'filename_prefix' => '',
+            'filename_prefix' => 'royalty_db_backup_',
 
             /*
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                'local',
+                's3',
             ],
         ],
 
