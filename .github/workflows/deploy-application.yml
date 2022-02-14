@@ -1,0 +1,6 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main
