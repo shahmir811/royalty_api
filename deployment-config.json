@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Royalty-server-aws",
+        "ip": "3.82.113.229",
+        "username": "ubuntu",
+        "port": "22",
+        "beforeHooks": "",
+        "afterHooks": "",
+        "path": "/var/www/html"
+    }
+]
