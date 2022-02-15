@@ -111,6 +111,7 @@ jobs:
           port: ${{ matrix.server.port }}
           envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH,LARAVEL_ENV
           script: |
+            printf "%s" "$LARAVEL_ENV" > "${BASE_PATH}/.env"
             ${{ matrix.server.beforeHooks }}
 
   activate-release:
