@@ -4,7 +4,7 @@
         "ip": "3.82.113.229",
         "username": "ubuntu",
         "port": "22",
-        "beforeHooks": "cd ${RELEASE_PATH} && php artisan migrate:fresh --seed --force --no-interaction",
+        "beforeHooks": "cd ${RELEASE_PATH}",
         "afterHooks": "",
         "path": "/var/www/html"
     }
