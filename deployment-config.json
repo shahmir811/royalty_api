@@ -1,7 +1,7 @@
 [
     {
         "name": "Royalty-test-server-aws",
-        "ip": "54.169.168.177",
+        "ip": "18.141.16.166",
         "username": "ubuntu",
         "port": "22",
         "beforeHooks": "cd ${RELEASE_PATH}",
