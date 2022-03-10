@@ -1,16 +1,7 @@
 [
     {
-        "name": "Royalty-test-server-aws",
-        "ip": "18.141.16.166",
-        "username": "ubuntu",
-        "port": "22",
-        "beforeHooks": "cd ${RELEASE_PATH}",
-        "afterHooks": "",
-        "path": "/var/www/html"
-    },
-    {
         "name": "RI-Royalty-prod-server",
-        "ip": "54.179.60.96",
+        "ip": "18.141.16.166",
         "username": "ubuntu",
         "port": "22",
         "beforeHooks": "cd ${RELEASE_PATH}",
