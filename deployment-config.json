@@ -10,7 +10,7 @@
     },
     {
         "name": "RI-Royalty-prod-server",
-        "ip": "18.142.122.145",
+        "ip": "54.179.60.96",
         "username": "ubuntu",
         "port": "22",
         "beforeHooks": "cd ${RELEASE_PATH}",
