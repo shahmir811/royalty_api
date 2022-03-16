@@ -12,7 +12,7 @@ class BaseCustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::withTrashed()->orderBy('name', 'asc')->get();
+        $customers = Customer::orderBy('name', 'asc')->get();
         return response() -> json([
             'status' => 1,
             'message' => 'List of all customers',

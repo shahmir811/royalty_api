@@ -14,7 +14,7 @@ class BaseLocationController extends Controller
     
     public function index()
     {
-        $locations = Location::withTrashed()->orderBy('name')->get();
+        $locations = Location::orderBy('name')->get();
         return response() -> json([
             'status' => 1,
             'message' => 'List of all locations',

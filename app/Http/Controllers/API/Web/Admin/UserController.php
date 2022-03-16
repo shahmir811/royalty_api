@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function users()
     {
-        $users = User::withTrashed()->get();
+        $users = User::all();
         return response() -> json([
             'status' => 1,
             'message' => 'List of all system Users',

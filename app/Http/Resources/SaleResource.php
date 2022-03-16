@@ -35,6 +35,7 @@ class SaleResource extends JsonResource
             'created_by'        => $this->user->name,
             'details'           => SaleDetailResource::collection($this->sales),
             'margin'            => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateMargin($this->total_sale_price, $this->total_avg_price),
+            'profit_amount'     => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateProfitAmount($this->total_sale_price, $this->total_avg_price),
             'created_at'        => date("d M Y, h:i A", strtotime($this->created_at)),    
         ];
     }
@@ -43,5 +44,11 @@ class SaleResource extends JsonResource
     {
         $result = ($sale_price - $avg_price) / $avg_price * 100;
         return number_format($result,2);
+    }
+
+    private function calculateProfitAmount($sale_price, $avg_price)
+    {
+        $result = ($sale_price - $avg_price);
+        return number_format($result,2); 
     }
 }
