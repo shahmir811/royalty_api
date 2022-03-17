@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 // Must uncomment line-29 in App\Providers\App\Providers\RouteServiceProvider to use following namespace
 
 Route::group([
+    'middleware' => ['cors'],
     'namespace' => 'API\Auth',
     'prefix' => 'auth'
 
@@ -25,7 +26,7 @@ Route::group([
 // Web Admin Routes
 
 Route::group([
-    'middleware' => ['auth:api', 'role:admin'],
+    'middleware' => ['auth:api', 'cors', 'role:admin'],
     'namespace' => 'API\Web\Admin',
     'prefix' => 'wadmin'
 
@@ -118,7 +119,7 @@ Route::group([
 // Web Employee Routes
 
 Route::group([
-    'middleware' => ['auth:api', 'role:employee'],
+    'middleware' => ['auth:api', 'cors', 'role:employee'],
     'namespace' => 'API\Web\Employee',
     'prefix' => 'wemployee'
 
@@ -191,6 +192,7 @@ Route::group([
 
 
 Route::group([
+    'middleware' => ['cors'],
     'namespace' => 'API\Auth',
 
 ], function () {
