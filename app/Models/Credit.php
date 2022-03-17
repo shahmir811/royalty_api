@@ -14,6 +14,7 @@ class Credit extends Model
         'due_amount',
         'customer_id',
         'sale_id',
+        'due_date'
     ];     
 
     public function customer()
