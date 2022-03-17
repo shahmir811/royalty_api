@@ -17,6 +17,7 @@ class CreateCreditsTable extends Migration
             $table->id();
             $table->double('due_amount', 10, 2);
             $table->double('total_amount_paid', 10, 2);
+            $table->date('due_date');
 
             $table->foreignId('customer_id');
             $table->foreignId('sale_id');
