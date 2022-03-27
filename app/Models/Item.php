@@ -15,16 +15,17 @@ class Item extends Model
         'package',
         'cbm',
         'weight',
+        'category_id'
     ];         
 
     public function purchaseDetails() {
         return $this->hasMany(PurchaseDetail::class);
     }
 
-    // public function purchase_details()
-    // {
-    //     return $this->hasMany(PurchaseDetail::class);
-    // }  
+    public function category()
+    {
+        return $this->belongsTo(Category::class)->withTrashed();
+    }    
 
     public function inventories() {
         return $this->hasMany(SaleDetail::class);

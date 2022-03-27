@@ -77,6 +77,11 @@ Route::group([
     Route::get('remove-purchase-record/{id}', 'PurchaseController@removePurchaseRecord');
     Route::get('print-purchase-details/{id}', 'PurchaseController@printPurchaseDetails');
 
+    // Web Admin Category controller
+    Route::get('categories', 'CategoryController@index');
+    Route::post('add-category', 'CategoryController@store');
+    Route::post('update-category/{id}', 'CategoryController@update');
+    Route::delete('remove-category/{id}', 'CategoryController@removeCategoryRecord');
 
     // Web Admin Items Controller
     Route::get('items-list', 'ItemsController@index');
@@ -158,6 +163,10 @@ Route::group([
     // Route::get('remove-purchase-record/{id}', 'PurchaseController@removePurchaseRecord');
     Route::get('print-purchase-details/{id}', 'PurchaseController@printPurchaseDetails');
 
+    // Web Employee Category controller
+    Route::get('categories', 'CategoryController@index');
+    Route::post('add-category', 'CategoryController@store');
+    Route::post('update-category/{id}', 'CategoryController@update');
 
     // Web Employee Items Controller
     Route::get('items-list', 'ItemsController@index');

@@ -81,6 +81,7 @@ class BaseItemsController extends Controller
     private function saveData(ItemFormRequest $request, Item $item)
     {
         $item->name         = $request->name;
+        $item->category_id  = $request->category_id;
         $item->package      = $request->package;
         $item->cbm          = $request->cbm;
         $item->weight       = $request->weight;
