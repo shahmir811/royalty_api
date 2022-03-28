@@ -36,7 +36,7 @@ class ItemFormRequest extends FormRequest
     {
         return [
             'name.required' => 'Mention item name',
-            'category_id'   => 'Select category from dropdown'
+            'category_id.required'   => 'Select category from dropdown'
         ];
     }   
 
