@@ -102,6 +102,7 @@ class BaseCustomerCreditController extends Controller
         $credit->customer_id        = $customer_id;
         $credit->sale_id            = $request->sale_id;
         $credit->due_amount         = $request->due_amount;
+        $credit->due_date           = $request->due_date;
         $credit->total_amount_paid  = $request->total_amount_paid;
         $credit->save();
 
