@@ -110,7 +110,7 @@ class BaseSaleController extends Controller
         }
 
         // if status is changed from delivered to cancelled, then we have to move all the items to the inventory
-        if($old_status == $delivered_status->id && $new_status == $cancelled_status->id) {
+        if($old_status == $delivered_status->id && $new_status != $delivered_status->id) {
             $this->moveBackItemsToInventory($sale->id);
         }
 
