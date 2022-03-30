@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\Web\Admin;
 
 use DB;
 use Carbon\Carbon;
-use App\Models\Sale;
+use App\Models\{Sale, Status};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\Common\BaseSaleController;
@@ -31,13 +31,15 @@ class SaleController extends BaseSaleController
 
     public function getSalesRecord(Request $request)
     {
-        $days       = $request->days;
-        $lastDays   = Carbon::now()->subDays($days);
+        $days               = $request->days;
+        $lastDays           = Carbon::now()->subDays($days);
+        $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
 
         $records    = Sale::query()
                         ->select('created_at', DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('DATE(created_at) as date_at'), DB::raw('DAYNAME(created_at) as DayName'),  DB::raw('DAY(created_at) as Date'))
                         ->where('created_at', '>', $lastDays)
                         ->where('sale_invoice_no', '<>', '')
+                        ->where('status_id', '<>', $cancelled_status->id)
                         ->groupBy('created_at')
                         ->orderBy('created_at', 'asc')
                         ->get();        
@@ -56,13 +58,15 @@ class SaleController extends BaseSaleController
 
     public function getSalesBetweenDates(Request $request)
     {
-        $start      = $request->start;
-        $end        = $request->end;
+        $start              = $request->start;
+        $end                = $request->end;
+        $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
 
         $records    = Sale::query()
                         ->select('created_at', DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('DATE(created_at) as date_at'), DB::raw('DAYNAME(created_at) as DayName'),  DB::raw('DAY(created_at) as Date'))
                         ->whereBetween('created_at', [$start, $end])
                         ->where('sale_invoice_no', '<>', '')
+                        ->where('status_id', '<>', $cancelled_status->id)
                         ->groupBy('created_at')
                         ->orderBy('created_at', 'asc')
                         ->get();        
@@ -81,14 +85,16 @@ class SaleController extends BaseSaleController
 
     public function getYearlySales(Request $request)
     {
-        $year = $request->year;
-        $start      = $year . '-01-01';
-        $end        = $year . '-12-31';
+        $year               = $request->year;
+        $start              = $year . '-01-01';
+        $end                = $year . '-12-31';
+        $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
 
         $records    = Sale::query()
                         ->select(DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('MONTHNAME(created_at) AS Month')) 
                         ->whereBetween('created_at', [$start, $end])
                         ->where('sale_invoice_no', '<>', '')
+                        ->where('status_id', '<>', $cancelled_status->id)
                         ->groupBy('Month')
                         ->orderBy('Month', 'desc')
                         ->get();

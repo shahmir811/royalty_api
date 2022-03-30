@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Status;
 use App\Http\Resources\SaleDetailResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -34,20 +35,30 @@ class SaleResource extends JsonResource
             'status'            => $this->status->name,
             'created_by'        => $this->user->name,
             'details'           => SaleDetailResource::collection($this->sales),
-            'margin'            => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateMargin($this->total_sale_price, $this->total_avg_price),
-            'profit_amount'     => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateProfitAmount($this->total_sale_price, $this->total_avg_price),
+            'margin'            => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateMargin($this->status_id, $this->total_sale_price, $this->total_avg_price),
+            'profit_amount'     => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateProfitAmount($this->status_id, $this->total_sale_price, $this->total_avg_price),
             'created_at'        => date("d M Y, h:i A", strtotime($this->created_at)),    
         ];
     }
 
-    private function calculateMargin($sale_price, $avg_price)
+    private function calculateMargin($status_id, $sale_price, $avg_price)
     {
+        $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
+        if($status_id == $cancelled_status->id) {
+            return number_format(0,2);
+        }
+
         $result = ($sale_price - $avg_price) / $avg_price * 100;
         return number_format($result,2);
     }
 
-    private function calculateProfitAmount($sale_price, $avg_price)
+    private function calculateProfitAmount($status_id, $sale_price, $avg_price)
     {
+        $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
+        if($status_id == $cancelled_status->id) {
+            return number_format(0,2);
+        }
+
         $result = ($sale_price - $avg_price);
         return number_format($result,2); 
     }

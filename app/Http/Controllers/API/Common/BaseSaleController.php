@@ -86,6 +86,9 @@ class BaseSaleController extends Controller
 
     public function updateSaleRecord (SaleRequest $request, $id)
     {
+        $delivered_status           = Status::where('name', '=', 'Delivered')->where('type', '=', 'sales')->first();
+        $cancelled_status           = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
+
         $sale                       = Sale::findOrFail($id);
         $sale->sale_invoice_no      = $request->sale_invoice_no;
         $sale->extra_charges        = $request->extra_charges;
@@ -94,14 +97,21 @@ class BaseSaleController extends Controller
         $sale->contact_no           = $request->contact_no;
         $sale->shipping_location    = $request->shipping_location;
         $sale->type                 = $request->type;
+        $old_status                 = $sale->status_id;
         $sale->status_id            = $request->status_id;
+        $new_status                 = $request->status_id;
         $sale->quotation            = $request->quotation;
         $sale->customer_id          = $request->customer_id;
         $sale->save();
 
         // if sale status is deleivered, then update inventory
-        if($sale->status_id == 4) {
+        if($sale->status_id == $delivered_status->id) {
             $this->updateInventory($sale->id);
+        }
+
+        // if status is changed from delivered to cancelled, then we have to move all the items to the inventory
+        if($old_status == $delivered_status->id && $new_status == $cancelled_status->id) {
+            $this->moveBackItemsToInventory($sale->id);
         }
 
         return response() -> json([
@@ -193,6 +203,21 @@ class BaseSaleController extends Controller
         $pdf = PDF::loadView('pdfs.saleDetails', compact('id'));
         $pdf->setPaper('a4' , 'portrait');
         return $pdf->output();        
+    }
+
+    private function moveBackItemsToInventory($sale_id)
+    {
+        $records   = SaleDetail::where('sale_id', '=', $sale_id)->get();
+
+        if(sizeof($records) > 0) {
+            foreach($records as $record) {
+                $inventory = Inventory::findOrFail($record->inventory_id);
+                $inventory->quantity += $record->quantity;
+                $inventory->save();
+            }            
+        }
+
+        return;        
     }
 
     private function updateInventory($sale_id)
