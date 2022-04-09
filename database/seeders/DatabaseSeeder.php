@@ -21,26 +21,25 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserTableSeeder::class);
 
-        $this->call(LocationTableSeeder::class);
+        // $this->call(LocationTableSeeder::class);
 
-        $this->call(CustomerTableSeeder::class);
+        // $this->call(CustomerTableSeeder::class);
 
         $this->call(StatusTableSeeder::class);
 
         $this->call(PredefinedValueTableSeeder::class);
 
-        $this->call(CategoryTableSeeder::class);
+        // $this->call(CategoryTableSeeder::class);
 
-        $this->call(ItemsTableSeeder::class);
+        // $this->call(ItemsTableSeeder::class);
         
-        $this->call(InventoryTableSeeder::class);
+        // $this->call(InventoryTableSeeder::class);
 
-        $this->call(PurchaseSeeder::class);
+        // $this->call(PurchaseSeeder::class);
 
-        $this->call(SaleSeeder::class);  
+        // $this->call(SaleSeeder::class);  
         
-        $this->call(CreditTableSeeder::class);   
-        
-        // $this->call(PaymentTableSeeder::class); 
+        // $this->call(CreditTableSeeder::class);   
+         
     }
 }

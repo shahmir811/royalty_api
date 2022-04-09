@@ -28,6 +28,7 @@ class InventoryResource extends JsonResource
             'avg_price' => number_format($this->avg_price,2),
             'location_id' => $this->location->id,
             'location' => $this->location->name,
+            'categories' => $this->item->category->name,
             'status' => $this->deleted_at ? 'Deactive' : 'Active',
         ];
     }

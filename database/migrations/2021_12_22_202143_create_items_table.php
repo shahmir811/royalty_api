@@ -20,6 +20,8 @@ class CreateItemsTable extends Migration
             $table->double('weight', 6, 2);
             $table->string('package');            
             $table->text('description')->nullable();
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
