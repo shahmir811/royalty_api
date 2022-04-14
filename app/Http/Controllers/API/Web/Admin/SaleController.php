@@ -36,7 +36,7 @@ class SaleController extends BaseSaleController
         $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
 
         $records    = Sale::query()
-                        ->select('created_at', DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('DATE(created_at) as date_at'), DB::raw('DAYNAME(created_at) as DayName'),  DB::raw('DAY(created_at) as Date'))
+                        ->select('created_at', DB::raw('SUM(total_sale_price) as sale'), DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('DATE(created_at) as date_at'), DB::raw('DAYNAME(created_at) as DayName'),  DB::raw('DAY(created_at) as Date'))
                         ->where('created_at', '>', $lastDays)
                         ->where('sale_invoice_no', '<>', '')
                         ->where('status_id', '<>', $cancelled_status->id)
@@ -63,7 +63,7 @@ class SaleController extends BaseSaleController
         $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
 
         $records    = Sale::query()
-                        ->select('created_at', DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('DATE(created_at) as date_at'), DB::raw('DAYNAME(created_at) as DayName'),  DB::raw('DAY(created_at) as Date'))
+                        ->select('created_at', DB::raw('SUM(total_sale_price) as sale'), DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('DATE(created_at) as date_at'), DB::raw('DAYNAME(created_at) as DayName'),  DB::raw('DAY(created_at) as Date'))
                         ->whereBetween('created_at', [$start, $end])
                         ->where('sale_invoice_no', '<>', '')
                         ->where('status_id', '<>', $cancelled_status->id)
@@ -91,7 +91,7 @@ class SaleController extends BaseSaleController
         $cancelled_status   = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
 
         $records    = Sale::query()
-                        ->select(DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('MONTHNAME(created_at) AS Month')) 
+                        ->select(DB::raw('SUM(total_sale_price - total_avg_price) as margin'), DB::raw('SUM(total_sale_price) as sale'), DB::raw('MONTHNAME(created_at) AS Month')) 
                         ->whereBetween('created_at', [$start, $end])
                         ->where('sale_invoice_no', '<>', '')
                         ->where('status_id', '<>', $cancelled_status->id)
