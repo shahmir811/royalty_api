@@ -22,12 +22,23 @@
     @if ($sale->sales->count())
           @foreach ($sale->sales as $detail)
             <div>
-              <p style="display: inline-block; font-size: 11px; width: 20px;">{{ $loop->index + 1 }}</p>
-              <p style="display: inline-block; font-size: 11px; width: 350px;">{{ $detail->inventory->item->name }}</p>
-              <p style="display: inline-block; font-size: 11px; width: 50px;">{{ $detail->quantity }}</p>
-              <p style="display: inline-block; font-size: 11px; width: 50px;">{{ $detail->sale_price }}</p>
-              <p style="display: inline-block; font-size: 11px; width: 50px;"></p>
-              <p style="display: inline-block; font-size: 11px; width: 50px;">{{ $detail->total_sale_price }}</p>
+              <p style="display: inline-block; font-size: 11px; width: 20px; margin-top: 0px; margin-bottom: 0px;">
+                {{ $loop->index + 1 }}
+              </p>
+              <p style="display: inline-block; font-size: 11px; width: 350px; margin-top: 0px; margin-bottom: 0px;">
+                {{ $detail->inventory->item->name }}
+              </p>
+              <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
+                {{ $detail->quantity }}
+              </p>
+              <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
+                {{ $detail->sale_price }}
+              </p>
+              <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
+              </p>
+              <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
+                {{ $detail->total_sale_price }}
+              </p>
             </div>
           @endforeach          
     @endif
