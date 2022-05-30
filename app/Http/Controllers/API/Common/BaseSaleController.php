@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Common;
 
 use Auth;
 use PDF;
+use Carbon\Carbon;
 use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -200,7 +201,9 @@ class BaseSaleController extends Controller
 
     public function printSaleDetails($id)
     {
-        $pdf = PDF::loadView('pdfs.saleDetails', compact('id'));
+        $today = Carbon::now()->format('d/m/Y');
+        $sale = Sale::findOrFail($id);
+        $pdf = PDF::loadView('pdfs.saleDetails', compact('id', 'sale', 'today'));
         $pdf->setPaper('a4' , 'portrait');
         return $pdf->output();        
     }
