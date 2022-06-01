@@ -29,15 +29,15 @@
                 {{ $detail->inventory->item->name }}
               </p>
               <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
-                {{ $detail->quantity }}
+                {{ number_format($detail->quantity, 2) }}
               </p>
               <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
-                {{ $detail->sale_price }}
+                {{ number_format($detail->sale_price, 2) }}
               </p>
               <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
               </p>
               <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
-                {{ $detail->total_sale_price }}
+                {{ number_format($detail->total_sale_price, 2) }}
               </p>
             </div>
           @endforeach          
@@ -47,6 +47,6 @@
   {{-- SALES GRAND TOTAL --}}
   <div style="margin-top: 40px; margin-left: 610px">
     <p style="display: inline-block; font-size: 11px;">
-      {{ $sale->sales->sum('total_sale_price') }}
+      {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
     </p>
   </div>
