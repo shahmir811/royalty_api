@@ -34,6 +34,7 @@ class SaleResource extends JsonResource
             'status_id'         => $this->status_id,
             'status'            => $this->status->name,
             'created_by'        => $this->user->name,
+            'received_by'       => $this->received_by,
             'details'           => SaleDetailResource::collection($this->sales),
             'margin'            => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateMargin($this->status_id, $this->total_sale_price, $this->total_avg_price),
             'profit_amount'     => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateProfitAmount($this->status_id, $this->total_sale_price, $this->total_avg_price),

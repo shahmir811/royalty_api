@@ -21,6 +21,11 @@
   <div style="margin-top: -100px; margin-left: 60px; height: 380px;">
     @if ($sale->sales->count())
           @foreach ($sale->sales as $detail)
+
+          @php
+            $taxOnItem = ($detail->quantity * $detail->sale_price * $sale->tax_percent) / 100;
+          @endphp
+
             <div>
               <p style="display: inline-block; font-size: 11px; width: 20px; margin-top: 0px; margin-bottom: 0px;">
                 {{ $loop->index + 1 }}
@@ -35,6 +40,7 @@
                 {{ number_format($detail->sale_price, 2) }}
               </p>
               <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
+                {{ number_format($taxOnItem, 2) }}
               </p>
               <p style="display: inline-block; font-size: 11px; width: 50px; margin-top: 0px; margin-bottom: 0px;">
                 {{ number_format($detail->total_sale_price, 2) }}
@@ -42,6 +48,11 @@
             </div>
           @endforeach          
     @endif
+  </div>
+
+  {{-- SALES TAX TOTAL --}}
+  <div>
+    <p>{{ number_format($sale->total_tax, 2) }}</p>
   </div>
 
   {{-- SALES GRAND TOTAL --}}

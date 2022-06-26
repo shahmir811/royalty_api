@@ -89,6 +89,7 @@ class BaseSaleController extends Controller
     {
         $delivered_status           = Status::where('name', '=', 'Delivered')->where('type', '=', 'sales')->first();
         $cancelled_status           = Status::where('name', '=', 'Cancelled')->where('type', '=', 'sales')->first();
+        $pending_status             = Status::where('name', '=', 'Pending')->where('type', '=', 'sales')->first();
 
         $sale                       = Sale::findOrFail($id);
         $sale->sale_invoice_no      = $request->sale_invoice_no;
@@ -103,6 +104,12 @@ class BaseSaleController extends Controller
         $new_status                 = $request->status_id;
         $sale->quotation            = $request->quotation;
         $sale->customer_id          = $request->customer_id;
+
+        if($request->status_id != $pending_status->id && $sale->received_by == '') {
+            $username = Auth::user()->name;
+            $sale->received_by = $username;
+        }
+
         $sale->save();
 
         // if sale status is deleivered, then update inventory

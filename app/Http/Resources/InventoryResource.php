@@ -21,6 +21,7 @@ class InventoryResource extends JsonResource
             'quantity' => $this->quantity,
             // 'description' => $this->description,
             // 'package' => $this->package,
+            'package' => number_format($this->quantity / $this->item->package,2) ,
             // 'cbm' => number_format($this->cbm,2),
             // 'weight' => number_format($this->weight,2),
             'purchase_price' => number_format($this->purchase_price,2),
@@ -30,6 +31,7 @@ class InventoryResource extends JsonResource
             'location' => $this->location->name,
             'categories' => $this->item->category->name,
             'status' => $this->deleted_at ? 'Deactive' : 'Active',
+            'total_cost_value' => number_format($this->avg_price * $this->quantity, 2)
         ];
     }
 }
