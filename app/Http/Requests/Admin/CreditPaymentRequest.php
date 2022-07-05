@@ -24,7 +24,9 @@ class CreditPaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount' => 'required|numeric',                    
+            'amount' => 'required|numeric',
+            'reason' => 'required',  
+            'paid_by' => 'required',                    
         ];
     }
 
@@ -33,6 +35,8 @@ class CreditPaymentRequest extends FormRequest
         return [
             'amount.required' => 'Mention amount',
             'amount.numeric' => 'Kindly enter a valid amount',
+            'reason.required' => 'Reason is required',
+            'paid_by.required' => 'Mention name',
         ];
     }        
 }

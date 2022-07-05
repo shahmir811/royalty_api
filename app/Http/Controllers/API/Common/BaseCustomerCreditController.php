@@ -63,10 +63,12 @@ class BaseCustomerCreditController extends Controller
 
     public function addPayment(CreditPaymentRequest $request, $credit_id)
     {
-        $payment            = new Payment;
-        $payment->amount    = $request->amount;
-        $payment->user_id   = Auth::id();
-        $payment->credit_id = $credit_id;
+        $payment                = new Payment;
+        $payment->amount        = $request->amount;
+        $payment->paid_by       = $request->paid_by;
+        $payment->reason        = $request->reason;
+        $payment->user_id       = Auth::id();
+        $payment->credit_id     = $credit_id;
         $payment->save();
 
         $credit              = Credit::findOrFail($credit_id);
@@ -135,7 +137,5 @@ class BaseCustomerCreditController extends Controller
         return $records;
      
     }
-
-
 
 }

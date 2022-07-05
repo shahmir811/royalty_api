@@ -13,6 +13,8 @@ class Payment extends Model
         'amount',
         'credit_id',
         'user_id',
+        'paid_by',
+        'reason',
     ];  
 
     public function user()

@@ -17,6 +17,9 @@ class CreditPaymentResource extends JsonResource
         return [
             'id'                => $this->id,
             'transaction_id'    => $this->transaction_id,
+            'serial_number'     => $this->id,
+            'reason'            => $this->reason,
+            'paid_by'           => $this->paid_by,
             'amount'            => number_format($this->amount, 2),
             'user_id'           => $this->user_id,
             'received_by'       => $this->user->name,
