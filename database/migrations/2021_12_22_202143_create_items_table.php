@@ -16,8 +16,8 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('cbm', 6, 2);
-            $table->double('weight', 6, 2);
+            $table->double('cbm', 6, 5);
+            $table->double('weight', 6, 5);
             $table->string('package');            
             $table->text('description')->nullable();
 
