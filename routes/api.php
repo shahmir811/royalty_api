@@ -64,7 +64,6 @@ Route::group([
     Route::post('add-inventoryItem', 'InventoryController@store');   
     Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
-    Route::get('change-inventoryItem-status/{id}', 'InventoryController@changeInventoryItemStatus');  
     Route::get('location-based-inventory/{id}', 'InventoryController@locationBasedInventory'); // "id" is the location id
 
     // Web Admin Purchases Controller
@@ -88,6 +87,7 @@ Route::group([
     Route::post('add-item', 'ItemsController@store');
     Route::post('update-item/{id}', 'ItemsController@update');
     Route::delete('remove-item/{id}', 'ItemsController@delete');
+    Route::get('change-item-status/{id}', 'ItemsController@changeItemStatus');  
 
     // Web Admin Sales Controller
     Route::get('sales-list', 'SaleController@index');
