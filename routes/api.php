@@ -118,6 +118,9 @@ Route::group([
     Route::get('remove-customer-credit-record/{credit_id}', 'CustomerCreditController@removeCustomerCreditRecord');
     Route::post('add-new-customer-credit/{customer_id}', 'CustomerCreditController@addNewCustomerCredit');
 
+    // Web Admin Delivery Notes controller
+    Route::get('all-delivery-notes', 'DeliveryNote@allDeliveryNotes');
+
 });
 
 
