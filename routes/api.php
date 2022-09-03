@@ -120,6 +120,11 @@ Route::group([
 
     // Web Admin Delivery Notes controller
     Route::get('all-delivery-notes', 'DeliveryNote@allDeliveryNotes');
+    Route::post('create-delivery-note', 'DeliveryNote@createDeliveryNote');
+    Route::get('view-delivery-note/{id}', 'DeliveryNote@viewDeliveryNote');
+    Route::delete('delete-delivery-note/{id}', 'DeliveryNote@deleteDeliveryNote');
+    Route::get('remaining-quantity/{sale_id}', 'DeliveryNote@remainingQuantityToDispatch');
+
 
 });
 

@@ -8,5 +8,8 @@ use App\Http\Controllers\API\Common\BaseDeliveryNote;
 
 class DeliveryNote extends BaseDeliveryNote
 {
-    //
+    public function deleteDeliveryNote($id)
+    {
+        //
+    }
 }
