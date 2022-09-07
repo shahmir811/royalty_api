@@ -19,7 +19,7 @@ class CreateDeliveryNotesTable extends Migration
             // $table->double('avg_price', 10, 2);
             // $table->double('sale_price', 10, 2);
             // $table->integer('quantity');     
-            $table->tinyInteger('is_completed')->default(0); // if 0, mean item are reamining to deliver
+            // $table->tinyInteger('is_completed')->default(0); // if 0, mean item are reamining to deliver
             // $table->integer('remaining_quantity');    
             
             $table->foreignId('sale_id');

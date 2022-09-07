@@ -14,7 +14,7 @@ class DeliveryNote extends Model
         // 'avg_price',
         // 'sale_price',
         // 'quantity',
-        'is_completed',
+        // 'is_completed',
         // 'remaining_quantity',
         'sale_id',
         // 'sale_detail_id',
@@ -55,7 +55,7 @@ class DeliveryNote extends Model
                 
         static::creating(function (DeliveryNote $note) {
             $note->delivery_note_no = $note->getLatestSaleInvoiceNo();
-            $note->is_completed = 0;
+            // $note->is_completed = 0;
         });
 
     }

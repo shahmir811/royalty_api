@@ -10,9 +10,9 @@ use App\Http\Resources\DeliveryNoteResource;
 
 class BaseDeliveryNote extends Controller
 {
-    public function allDeliveryNotes() 
+    public function allDeliveryNotes(Request $request) 
     {        
-        $notes = DeliveryNote::orderBy('created_at', 'desc')->get();
+        $notes = DeliveryNote::where('sale_id', '=', $request->sale_id)->orderBy('created_at', 'desc')->get();
         return response() -> json([
             'status' => 1,
             'message' => 'List of all delivery notes',
@@ -32,19 +32,19 @@ class BaseDeliveryNote extends Controller
             $this->addDeliveryNoteDetails($record, $note->id, $request->sale_id);
         }   
         
-        $is_completed = true;
-        $records = $this->remainingItems($request->sale_id);
+        // $is_completed = true;
+        // $records = $this->remainingItems($request->sale_id);
 
-        foreach ($records as $record) {
-            $remaining = (int)$record->remaining;
-            if($remaining > 0) {
-                $is_completed = false;
-                break;
-            }
-        }   
+        // foreach ($records as $record) {
+        //     $remaining = (int)$record->remaining;
+        //     if($remaining > 0) {
+        //         $is_completed = false;
+        //         break;
+        //     }
+        // }   
 
-        $note->is_completed = $is_completed;
-        $note->save();
+        // $note->is_completed = $is_completed;
+        // $note->save();
         
 
 

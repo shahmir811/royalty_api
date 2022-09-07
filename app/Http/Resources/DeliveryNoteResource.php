@@ -17,12 +17,11 @@ class DeliveryNoteResource extends JsonResource
         return [
             'id'                    => $this->id,
             'delivery_note_no'      => $this->delivery_note_no,
-            'is_completed'          => $this->is_completed,
             'sale_id'               => $this->sale_id,
             'sale_invoice_no'       => $this->sale->sale_invoice_no,
             'details'               => $this->deliver,
-            'details'               => DeliveryNoteDetailsResource::collection($this->delivery_note_details),
             'created_at'            => date("d M Y, h:i A", strtotime($this->created_at)),  
+            'details'               => DeliveryNoteDetailsResource::collection($this->delivery_note_details),
         ];
     }
 }
