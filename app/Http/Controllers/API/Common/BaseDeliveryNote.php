@@ -30,23 +30,7 @@ class BaseDeliveryNote extends Controller
 
         foreach ($request->details as $record) {
             $this->addDeliveryNoteDetails($record, $note->id, $request->sale_id);
-        }   
-        
-        // $is_completed = true;
-        // $records = $this->remainingItems($request->sale_id);
-
-        // foreach ($records as $record) {
-        //     $remaining = (int)$record->remaining;
-        //     if($remaining > 0) {
-        //         $is_completed = false;
-        //         break;
-        //     }
-        // }   
-
-        // $note->is_completed = $is_completed;
-        // $note->save();
-        
-
+        }        
 
         return response() -> json([
             'status' => 1,
@@ -58,28 +42,24 @@ class BaseDeliveryNote extends Controller
     public function viewDeliveryNote($id) 
     {
         $note = DeliveryNote::findOrFail($id);
-
-        // return response() -> json([
-        //     'status' => 1,
-        //     'message' => 'View delivery note details',
-        //     'data' => [
-        //         'note' => new DeliveryNoteResource($note)
-        //     ]
-        // ], 200);         
+  
     }
 
 
     private function addDeliveryNoteDetails($data, $delivery_note_id, $sale_id)
     {
-        $detail                     = new DeliveryNoteDetails();
-        $detail->delivery_note_id   = $delivery_note_id;
-        $detail->sale_id            = $sale_id;
-        $detail->location_id        = $data['location_id'];
-        $detail->inventory_id       = $data['inventory_id'];
-        $detail->quantity           = $data['quantity'];
-        $detail->save();
+        if($data['add'] !== 0) {
+            $detail                     = new DeliveryNoteDetails();
+            $detail->delivery_note_id   = $delivery_note_id;
+            $detail->sale_id            = $sale_id;
+            $detail->location_id        = $data['location_id'];
+            $detail->inventory_id       = $data['inventory_id'];
+            $detail->quantity           = $data['add'];
+            $detail->save();
 
-        return $detail;
+            return $detail;
+
+        }
 
     }
 

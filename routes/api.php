@@ -119,11 +119,11 @@ Route::group([
     Route::post('add-new-customer-credit/{customer_id}', 'CustomerCreditController@addNewCustomerCredit');
 
     // Web Admin Delivery Notes controller
-    Route::get('all-delivery-notes', 'DeliveryNote@allDeliveryNotes');
-    Route::post('create-delivery-note', 'DeliveryNote@createDeliveryNote');
-    Route::get('view-delivery-note/{id}', 'DeliveryNote@viewDeliveryNote');
-    Route::delete('delete-delivery-note/{id}', 'DeliveryNote@deleteDeliveryNote');
-    Route::get('remaining-quantity/{sale_id}', 'DeliveryNote@remainingQuantityToDispatch');
+    Route::get('all-delivery-notes', 'DeliveryNoteController@allDeliveryNotes');
+    Route::post('create-delivery-note', 'DeliveryNoteController@createDeliveryNote');
+    Route::get('view-delivery-note/{id}', 'DeliveryNoteController@viewDeliveryNote');
+    Route::delete('delete-delivery-note/{id}', 'DeliveryNoteController@deleteDeliveryNote');
+    Route::get('remaining-quantity/{sale_id}', 'DeliveryNoteController@remainingQuantityToDispatch');
 
 
 });
