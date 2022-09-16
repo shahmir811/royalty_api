@@ -7,6 +7,7 @@ use App\Models\{DeliveryNote, DeliveryNoteDetails, SaleDetail};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\DeliveryNoteResource;
+use App\Http\Requests\Admin\CreateDeliveryNoteRequest;
 
 class BaseDeliveryNote extends Controller
 {
@@ -22,10 +23,12 @@ class BaseDeliveryNote extends Controller
         ], 200); 
     }
 
-    public function createDeliveryNote(Request $request) 
+    public function createDeliveryNote(CreateDeliveryNoteRequest $request) 
     {
-        $note = new DeliveryNote();
-        $note->sale_id = $request->sale_id;
+        $note                       = new DeliveryNote();
+        $note->sale_id              = $request->sale_id;
+        $note->contact_no           = $request->contact_no;
+        $note->shipping_location    = $request->shipping_location;
         $note->save();
 
         foreach ($request->details as $record) {

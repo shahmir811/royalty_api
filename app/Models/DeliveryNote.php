@@ -11,15 +11,9 @@ class DeliveryNote extends Model
 
     protected $fillable = [
         'delivery_note_no',
-        // 'avg_price',
-        // 'sale_price',
-        // 'quantity',
-        // 'is_completed',
-        // 'remaining_quantity',
         'sale_id',
-        // 'sale_detail_id',
-        // 'location_id',
-        // 'inventory_id',
+        'contact_no',
+        'shipping_location'
     ];         
 
     // public function inventory()
