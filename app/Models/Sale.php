@@ -32,7 +32,7 @@ class Sale extends Model
     
     public function customer()
     {
-        return $this->belongsTo(Customer::class)->withTrashed();;
+        return $this->belongsTo(Customer::class)->withTrashed();
     }       
     
     public function status()
@@ -43,6 +43,11 @@ class Sale extends Model
     public function sales()
     {
         return $this->hasMany(SaleDetail::class);
+    }
+
+    public function delivery_notes() 
+    {
+        return $this->hasMany(DeliveryNote::class);
     }
     
     public static function boot()

@@ -118,6 +118,15 @@ Route::group([
     Route::get('remove-customer-credit-record/{credit_id}', 'CustomerCreditController@removeCustomerCreditRecord');
     Route::post('add-new-customer-credit/{customer_id}', 'CustomerCreditController@addNewCustomerCredit');
 
+    // Web Admin Delivery Notes controller
+    Route::get('all-delivery-notes', 'DeliveryNoteController@allDeliveryNotes');
+    Route::post('create-delivery-note', 'DeliveryNoteController@createDeliveryNote');
+    Route::get('view-delivery-note/{id}', 'DeliveryNoteController@viewDeliveryNote');
+    Route::delete('delete-delivery-note/{id}', 'DeliveryNoteController@deleteDeliveryNote');
+    Route::get('remaining-quantity/{sale_id}', 'DeliveryNoteController@remainingQuantityToDispatch');
+    Route::get('print-delivery-note/{id}', 'DeliveryNoteController@printDeliveryNote');
+
+
 });
 
 
