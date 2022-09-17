@@ -1,7 +1,7 @@
 [
     {
-        "name": "RI-Royalty-prod-server",
-        "ip": "18.141.16.166",
+        "name": "Testing server",
+        "ip": "13.214.221.37",
         "username": "ubuntu",
         "port": "22",
         "beforeHooks": "cd ${RELEASE_PATH}",
