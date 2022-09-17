@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API\Common;
 
 use DB;
-use App\Models\{DeliveryNote, DeliveryNoteDetails, SaleDetail};
+use PDF;
+use Carbon\Carbon;
+use App\Models\{DeliveryNote, DeliveryNoteDetails, SaleDetail, Sale};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\DeliveryNoteResource;
@@ -48,6 +50,17 @@ class BaseDeliveryNote extends Controller
   
     }
 
+    public function printDeliveryNote($id)
+    {
+        $today = Carbon::now()->format('d/m/Y');
+        $note = DeliveryNote::findOrFail($id);
+        $sale = Sale::findOrFail($note->sale_id);
+        $this->calculatePackages($note);
+        $pdf = PDF::loadView('pdfs.deliveryNote', compact('id', 'sale', 'today', 'note'));
+        $pdf->setPaper('a4' , 'portrait');
+        return $pdf->output();        
+    }
+
 
     private function addDeliveryNoteDetails($data, $delivery_note_id, $sale_id)
     {
@@ -88,6 +101,15 @@ class BaseDeliveryNote extends Controller
             ->get();    
 
         return $record;
+    }
+
+    private function calculatePackages ($note)
+    {
+        foreach ($note->delivery_note_details as $detail) {
+            $detail['packages'] = $detail->quantity * $detail->inventory->item->package;
+        }        
+
+        return;
     }
 
     

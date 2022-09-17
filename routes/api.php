@@ -124,6 +124,7 @@ Route::group([
     Route::get('view-delivery-note/{id}', 'DeliveryNoteController@viewDeliveryNote');
     Route::delete('delete-delivery-note/{id}', 'DeliveryNoteController@deleteDeliveryNote');
     Route::get('remaining-quantity/{sale_id}', 'DeliveryNoteController@remainingQuantityToDispatch');
+    Route::get('print-delivery-note/{id}', 'DeliveryNoteController@printDeliveryNote');
 
 
 });

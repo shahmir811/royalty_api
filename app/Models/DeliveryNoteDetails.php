@@ -32,4 +32,7 @@ class DeliveryNoteDetails extends Model
         return $this->belongsTo(DeliveryNote::class);
     }  
 
+
+
+
 }
