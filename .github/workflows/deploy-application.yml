@@ -9,7 +9,6 @@ jobs:
   create-deployment-artifacts:
     name: Create deployment artifacts
     runs-on: ubuntu-20.04
-    timeout-minutes: 10
     outputs:
       deployment-matrix: ${{ steps.export-deployment-matrix.outputs.deployment-matrix }}
     steps:
