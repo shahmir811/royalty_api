@@ -147,7 +147,7 @@ jobs:
             sudo ln -s -f ${BASE_PATH}/.env $RELEASE_PATH
             sudo ln -s -f $STORAGE_PATH $RELEASE_PATH
             sudo ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH
-            sudo service php8.1-fpm reload
+            sudo service php7.4-fpm reload
 
   run-after-hooks:
     name: "${{ matrix.server.name }}: After hook"
