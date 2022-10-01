@@ -34,6 +34,30 @@ class BaseSaleController extends Controller
         ], 200);        
     }
 
+    public function salesWithDeliveryNotes()
+    {
+        $showTax = PredefinedValue::findOrFail(1);
+
+        $records;
+
+        if($showTax->show_tax) {
+            $records = Sale::where('make_delivery_note', '=', 1)->orderBy('created_at', 'desc')->get();
+        } else {
+            $records = Sale::where('proper_invoice', '=', 1)
+                            ->where('make_delivery_note', '=', 1)
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+        }
+
+        return response() -> json([
+            'status' => 1,
+            'message' => 'Sales list',
+            'data' => [
+                'sales' => SaleResource::collection($records)
+            ]
+        ], 200);        
+    }    
+
     public function addNewSale (SaleRequest $request)
     {      
 
@@ -44,6 +68,7 @@ class BaseSaleController extends Controller
         $sale->total_tax            = $request->total_tax;
         $sale->tax_percent          = $request->tax_percent;
         $sale->contact_no           = $request->contact_no;
+        $sale->make_delivery_note   = $request->make_delivery_note;
         $sale->shipping_location    = $request->shipping_location;
         $sale->type                 = $request->type;
         $sale->quotation            = $request->quotation;
@@ -95,6 +120,7 @@ class BaseSaleController extends Controller
         $sale->sale_invoice_no      = $request->sale_invoice_no;
         $sale->extra_charges        = $request->extra_charges;
         $sale->total_tax            = $request->total_tax;
+        $sale->make_delivery_note   = $request->make_delivery_note;
         $sale->tax_percent          = $request->tax_percent;
         $sale->contact_no           = $request->contact_no;
         $sale->shipping_location    = $request->shipping_location;
@@ -108,6 +134,10 @@ class BaseSaleController extends Controller
         if($request->status_id != $pending_status->id && $sale->received_by == '') {
             $username = Auth::user()->name;
             $sale->received_by = $username;
+        }
+
+        if($request->status_id == $cancelled_status->id) {
+            $sale->cancelled_by = Auth::user()->name;
         }
 
         $sale->save();

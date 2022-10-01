@@ -20,6 +20,8 @@ class Sale extends Model
         'shipping_location',
         'type',
         'quotation',
+        'make_delivery_note',
+        'cancelled_by',
         'user_id',
         'statuses_id',
         'customer_id',

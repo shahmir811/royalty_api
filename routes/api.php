@@ -92,6 +92,7 @@ Route::group([
     // Web Admin Sales Controller
     Route::get('sales-list', 'SaleController@index');
     Route::post('add-sale', 'SaleController@addNewSale');
+    Route::get('sales-with-delivery-notes', 'SaleController@salesWithDeliveryNotes');
     Route::get('show-sale-details/{id}', 'SaleController@showSaleDetails'); 
     Route::get('all-sales-statuses', 'SaleController@fetchAllSalesStatus');
     Route::post('update-sale-data/{id}', 'SaleController@updateSaleRecord');
@@ -186,6 +187,7 @@ Route::group([
     // Web Employee Sales Controller
     Route::get('sales-list', 'SaleController@index');
     Route::post('add-sale', 'SaleController@addNewSale');
+    Route::get('sales-with-delivery-notes', 'SaleController@salesWithDeliveryNotes');
     Route::get('show-sale-details/{id}', 'SaleController@showSaleDetails'); 
     Route::get('all-sales-statuses', 'SaleController@fetchAllSalesStatus');
     Route::post('update-sale-data/{id}', 'SaleController@updateSaleRecord');

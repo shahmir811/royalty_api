@@ -75,6 +75,7 @@ class BaseCustomerController extends Controller
     {
         $customer->name                = $request->name;
         $customer->mark                = $request->mark;
+        $customer->trn                 = $request->trn;
         $customer->country             = $request->country;
         $customer->mobile_no_dubai     = $request->mobile_no_dubai;
         $customer->mobile_no_country   = $request->mobile_no_country;
