@@ -1,6 +1,6 @@
 
   {{-- CUSTOMER DETAIL --}}
-  <div style="padding-top: 10px; display: inline-block; width: 45%; margin-top: 320px; margin-left: 50px; height: 125px;">
+  <div style="padding-top: 10px; display: inline-block; width: 45%; margin-top: 270px; margin-left: 50px; height: 125px;">
     <p style="margin: 0px; font-size: 13px;">{{ $sale->customer->name }}</p>
     <p style="margin: 0px; font-size: 11px;">Dubai Contact: {{ $sale->customer->mobile_no_dubai }}</p>
     <p style="margin: 0px; font-size: 11px;">Country Contact: {{ $sale->customer->mobile_no_country }}</p>    
@@ -8,12 +8,12 @@
   </div>
 
   {{-- DELIVERY LOCATION --}}
-  <div style="padding-top: 10px; display: inline-block; margin-left: 10px; width: 40%; margin-top: 320px; margin-left: 50px; height: 125px;">
+  <div style="padding-top: 10px; display: inline-block; margin-left: 10px; width: 40%; margin-top: 270px; margin-left: 50px; height: 125px;">
     <p style="margin: 0px; font-size: 11px;">{{ $note->shipping_location }}</p>
     <p style="margin: 0px; font-size: 11px;">{{ $note->contact_no }}</p>
     <div style="margin-top: 20px; margin-left: 60px;">
       <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px;">{{ $note->delivery_note_no }}</p>
-      <p style="margin: 0px; display: inline-block; margin-left: 120px; font-size: 11px;">{{ $today }}</p>
+      <p style="margin: 0px; display: inline-block; margin-left: 135px; font-size: 11px;">{{ $today }}</p>
     </div>
   </div>
 
@@ -22,7 +22,7 @@
   @endphp  
 
   {{-- SALES DETAILS TABLE --}}
-  <div style="margin-top: -100px; margin-left: 60px; height: 375px;">
+  <div style="margin-top: -100px; margin-left: 40px; height: 437px;">
     @if ($note->delivery_note_details->count())
 
 
@@ -37,7 +37,7 @@
               <p style="display: inline-block; font-size: 11px; width: 20px; margin-top: 0px; margin-bottom: 0px;">
                 {{ $loop->index + 1 }}
               </p>
-              <p style="display: inline-block; font-size: 11px; width: 400px; margin-top: 0px; margin-bottom: 0px;">
+              <p style="display: inline-block; font-size: 11px; width: 480px; margin-top: 0px; margin-bottom: 0px;">
                 {{ $detail->inventory->item->name }}
               </p>
 
@@ -57,7 +57,12 @@
   </div>
 
   {{-- TOTAL CARTON --}}
-  <div style="margin-left: 170px;">
+  <div style="margin-left: 170px; height: 70px;">
     <p>{{ $note->convertNumber($total_packages) }}</p>
   </div>
-  {{-- SALES GRAND TOTAL --}}
+
+  {{-- CREATED BY AND CBM WEIGHT --}}
+  <div style="margin-left: 350px">
+    <p style="font-size: 11px; width: 100px;">{{ auth()->user()->name }}</p>
+    <p style="font-size: 11px; width: 50px;">335.00</p>
+  </div>
