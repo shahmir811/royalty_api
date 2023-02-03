@@ -19,10 +19,10 @@ jobs:
           npm install
           npm run prod
 
-      - name: Configure PHP 7.4
+      - name: Configure PHP 8.2.1
         uses: shivammathur/setup-php@master
         with:
-          php-version: 7.4
+          php-version: 8.2.1
           extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
       - name: Install Composer Dependencies
@@ -147,7 +147,7 @@ jobs:
             sudo ln -s -f ${BASE_PATH}/.env $RELEASE_PATH
             sudo ln -s -f $STORAGE_PATH $RELEASE_PATH
             sudo ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH
-            sudo service php7.4-fpm reload
+            sudo service php8.2.1-fpm reload
 
   run-after-hooks:
     name: "${{ matrix.server.name }}: After hook"
