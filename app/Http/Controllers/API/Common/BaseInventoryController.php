@@ -110,8 +110,9 @@ class BaseInventoryController extends Controller
     /////////////////////////////////////////////////////////////////////////  
     private function itemAlreadyInWarehouse($item_id, $location)
     {
-        $location_id = Location::findOrFail($location)->pluck('id');
-        $record = Inventory::where('item_id', $item_id)->where('location_id', $location_id)->count();
+        // $location_id = Location::findOrFail($location)->pluck('id');
+        // $record = Inventory::where('item_id', $item_id)->where('location_id', $location_id)->count();
+        $record = Inventory::where('item_id', $item_id)->where('location_id', $location)->count();
         return $record != 0 ? true : false;
     }
     
