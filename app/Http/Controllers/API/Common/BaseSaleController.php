@@ -67,6 +67,7 @@ class BaseSaleController extends Controller
         $sale->extra_charges        = $request->extra_charges;
         $sale->total_tax            = $request->total_tax;
         $sale->tax_percent          = $request->tax_percent;
+        $sale->payment_mode         = $request->payment_mode;
         $sale->contact_no           = $request->contact_no;
         $sale->make_delivery_note   = $request->make_delivery_note;
         $sale->shipping_location    = $request->shipping_location;
@@ -122,6 +123,7 @@ class BaseSaleController extends Controller
         $sale->total_tax            = $request->total_tax;
         $sale->make_delivery_note   = $request->make_delivery_note;
         $sale->tax_percent          = $request->tax_percent;
+        $sale->payment_mode         = $request->payment_mode;
         $sale->contact_no           = $request->contact_no;
         $sale->shipping_location    = $request->shipping_location;
         $sale->type                 = $request->type;

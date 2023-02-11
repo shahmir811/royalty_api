@@ -29,6 +29,7 @@ class SaleRequest extends FormRequest
             'shipping_location' => 'required',
             'customer_id'       => 'required|integer',
             'extra_charges'     => 'required',
+            'payment_mode'      => 'required',
         ];
     }
 
@@ -39,7 +40,8 @@ class SaleRequest extends FormRequest
             'extra_charges.required'        => 'Mention any extra charges',
             'customer_id.required'          => 'Select customer from dropdown',
             'contact_no.required'           => 'Contact no is required',
-            'shipping_location.required'    => 'Shipping address is required'
+            'shipping_location.required'    => 'Shipping address is required',
+            'payment_mode.required'         => 'Payment mode is required'
         ];
     }        
 

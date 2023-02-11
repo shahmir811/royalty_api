@@ -33,6 +33,7 @@ class SaleResource extends JsonResource
             'shipping_location'         => $this->shipping_location,
             'quotation'                 => $this->quotation ? 'Yes' : 'No',
             'status_id'                 => $this->status_id,
+            'payment_mode'              => $this->payment_mode,
             'status'                    => $this->status->name,
             'created_by'                => $this->user->name,
             'received_by'               => $this->received_by,

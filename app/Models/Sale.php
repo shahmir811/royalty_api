@@ -25,6 +25,7 @@ class Sale extends Model
         'user_id',
         'statuses_id',
         'customer_id',
+        'payment_mode'
     ];          
 
     public function user()
