@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\Common;
 
 use PDF;
-use App\Models\{Purchase, PurchaseDetail, Inventory, Status};
+use App\Models\{Purchase, PurchaseDetail, Inventory, Status, InventoryItemHistory};
 use App\Http\Resources\PurchaseResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -218,6 +218,19 @@ class BasePurchaseController extends Controller
             $invt->save();            
 
         }
+
+        // TODO: Add Inventory history item
+
+        $obj                        = new \stdClass();
+        $obj->quantity              = $detail->quantity;
+        $obj->inventory_id          = $inventory->id;
+        $obj->description           = "Purchased " . $detail->quantity ." items at price: " . $detail->price . " each.";
+        $obj->status                = "PURCHASED";
+        $obj->purchased_invoice_no  = $detail->purchase->purchase_invoice_no;
+        $obj->sale_invoice_no       = null;
+        
+        InventoryItemHistory::addNewHistoryRecord($obj);           
+
         return ;
     }
 }

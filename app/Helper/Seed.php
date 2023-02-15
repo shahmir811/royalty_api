@@ -6,7 +6,7 @@ class Seed
 {
     protected static $running = false;
 
-    public function isRunning()
+    public static function isRunning()
     {
         return static::$running;
     }

@@ -9,9 +9,10 @@ use App\Http\Resources\InventoryItemHistoryResource;
 
 class BaseInventoryItemHistoryController extends Controller
 {
-    public function index(Request $id) 
+    public function index($invt_id) 
     {
-        $hist = InventoryItemHistory::findOrFail($id)->orderBy('created_at', 'desc')->get();
+
+        $hist = InventoryItemHistory::where('inventory_id', '=', $invt_id)->orderBy('created_at', 'desc')->get();
         return response() -> json([
             'status' => 1,
             'message' => 'History of the mentioned item',

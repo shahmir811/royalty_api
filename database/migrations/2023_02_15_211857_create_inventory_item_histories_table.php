@@ -17,9 +17,6 @@ class CreateInventoryItemHistoriesTable extends Migration
             $table->id();
             $table->string('description');
             $table->string('status'); // MOVE_IN, MOVE_OUT, PURCHASE, SALE
-            $table->double('purchase_price', 10, 2);
-            $table->double('avg_price', 10, 2);
-            $table->double('sale_price', 10, 2);
             $table->integer('quantity');
             
             $table->string('purchased_invoice_no')->nullable();
