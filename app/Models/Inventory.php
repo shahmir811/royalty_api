@@ -27,6 +27,11 @@ class Inventory extends Model
     public function item()
     {
         return $this->belongsTo(Item::class)->withTrashed();
-    }     
+    }   
+    
+    public function item_history()
+    {
+        return $this->hasMany(InventoryItemHistory::class);
+    }    
 
 }

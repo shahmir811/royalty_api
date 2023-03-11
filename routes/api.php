@@ -127,7 +127,8 @@ Route::group([
     Route::get('remaining-quantity/{sale_id}', 'DeliveryNoteController@remainingQuantityToDispatch');
     Route::get('print-delivery-note/{id}', 'DeliveryNoteController@printDeliveryNote');
 
-
+    // Web Admin Inventory Items History controller
+    Route::get('inventory-item-history/{invt_id}', 'InventoryItemHistoryController@index');
 });
 
 
