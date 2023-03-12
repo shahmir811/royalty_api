@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Common;
 
 use PDF;
+use Carbon\Carbon;
 use App\Models\{Purchase, PurchaseDetail, Inventory, Status, InventoryItemHistory};
 use App\Http\Resources\PurchaseResource;
 use App\Http\Controllers\Controller;
@@ -103,7 +104,7 @@ class BasePurchaseController extends Controller
         $purchase = Purchase::findOrFail($id);
 
         foreach ($purchase->purchases as $record) {
-            $this->adjustInventory($record);
+            $this->adjustInventory($record, $purchase->id);
         }
 
         $received_status_id     = Status::where('name', '=', 'Received')->where('type', '=', 'purchase')->pluck('id');
@@ -198,7 +199,7 @@ class BasePurchaseController extends Controller
         return $avg;
     }
 
-    private function adjustInventory(PurchaseDetail $detail)
+    private function adjustInventory(PurchaseDetail $detail, $purchase_id)
     {
         $inventory = Inventory::where('location_id', '=', $detail->location_id)->where('item_id', '=', $detail->item_id)->first();
 
@@ -226,8 +227,11 @@ class BasePurchaseController extends Controller
         $obj->inventory_id          = $inventory->id;
         $obj->description           = "Purchased " . $detail->quantity ." items at price: " . $detail->price . " each.";
         $obj->status                = "PURCHASED";
+        $obj->purchase_id          = $purchase_id;
         $obj->purchased_invoice_no  = $detail->purchase->purchase_invoice_no;
+        $obj->sale_id               = null;
         $obj->sale_invoice_no       = null;
+        $obj->created_at            = Carbon::now();
         
         InventoryItemHistory::addNewHistoryRecord($obj);           
 

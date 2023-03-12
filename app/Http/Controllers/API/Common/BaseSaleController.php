@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\Common;
 use Auth;
 use PDF;
 use Carbon\Carbon;
-use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue};
+use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue, InventoryItemHistory};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\{SaleResource, StatusResource, SaleDetailResource};
@@ -147,11 +147,13 @@ class BaseSaleController extends Controller
         // if sale status is deleivered, then update inventory
         if($sale->status_id == $delivered_status->id) {
             $this->updateInventory($sale->id);
+            $this->addInventoryItemHistory($sale->id, $sale->sale_invoice_no);
         }
 
         // if status is changed from delivered to cancelled, then we have to move all the items to the inventory
         if($old_status == $delivered_status->id && $new_status != $delivered_status->id) {
             $this->moveBackItemsToInventory($sale->id);
+            $this->removeInventoryItemHistory($sale->id, $sale->sale_invoice_no);
         }
 
         return response() -> json([
@@ -327,4 +329,34 @@ class BaseSaleController extends Controller
         }
     }
 
+    private function addInventoryItemHistory($sale_id, $sale_invoice_no)
+    {
+        $details = SaleDetail::where('sale_id', '=', $sale_id)->get();
+
+        foreach ($details as $detail) {
+
+            $obj                        = new \stdClass();
+            $obj->quantity              = $detail->quantity;
+            $obj->inventory_id          = $detail->inventory_id;
+            $obj->description           = "Sold " . $detail->quantity ." items at price: " . $detail->sale_price . " each.";
+            $obj->status                = "SOLD";
+            $obj->purchase_id           = null;
+            $obj->purchased_invoice_no  = null;
+            $obj->sale_id               = $sale_id;
+            $obj->sale_invoice_no       = $detail->sale->sale_invoice_no;
+            $obj->created_at            = $detail->created_at;
+
+            InventoryItemHistory::addNewHistoryRecord($obj);        
+        }
+
+        return;
+    }
+
+
+    private function removeInventoryItemHistory($sale_id, $sale_invoice_no)
+    {
+        InventoryItemHistory::where('status', '=', 'SOLD')->where('sale_invoice_no', '=', $sale_invoice_no)->delete();
+        return;
+    }
+ 
 }
