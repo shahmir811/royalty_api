@@ -19,7 +19,9 @@ class CreateInventoryItemHistoriesTable extends Migration
             $table->string('status'); // MOVE_IN, MOVE_OUT, PURCHASE, SALE
             $table->integer('quantity');
             
+            $table->string('purchase_id')->nullable();
             $table->string('purchased_invoice_no')->nullable();
+            $table->string('sale_id')->nullable();
             $table->string('sale_invoice_no')->nullable();
             $table->string('action_performer'); // User who performed the action
             $table->foreignId('inventory_id');
