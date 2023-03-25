@@ -81,7 +81,7 @@ class BaseInventoryController extends Controller
     /////////////////////////////////////////////////////////////////////////  
     public function locationBasedInventory($id)
     {
-        $inventories = Inventory::where('location_id',$id)->get();
+        $inventories = Inventory::where('location_id', '=',$id)->get();
         return response() -> json([
             'status' => 1,
             'message' => 'List of all inventories in mentioned location',

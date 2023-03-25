@@ -132,6 +132,7 @@ Route::group([
 
     // Web Admin Inventory move items controller
     Route::get('moves', 'MoveController@index');
+    Route::post('moves', 'MoveController@moveInventoryItems');
 
 });
 
