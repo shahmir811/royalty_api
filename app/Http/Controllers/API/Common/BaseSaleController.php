@@ -242,6 +242,14 @@ class BaseSaleController extends Controller
 
     public function printSaleDetails($id)
     {
+        // dd(class_exists('DOMDocument'));
+        // return response() -> json([
+        //     'status' => 1,
+        //     'message' => 'Sale Detail Item has been removed',
+        //     'exists' => class_exists('DOMDocument')
+        // ], 200);            
+
+
         $today = Carbon::now()->format('d/m/Y');
         $sale = Sale::findOrFail($id);
         $pdf = PDF::loadView('pdfs.saleDetails', compact('id', 'sale', 'today'));
