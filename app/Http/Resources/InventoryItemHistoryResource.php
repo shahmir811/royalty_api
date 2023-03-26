@@ -23,6 +23,8 @@ class InventoryItemHistoryResource extends JsonResource
             'purchased_invoice_no'  => $this->purchased_invoice_no,
             'sale_id'               => $this->sale_id,      
             'sale_invoice_no'       => $this->sale_invoice_no,
+            'move_id'               => $this->move_id,      
+            'move_invoice_no'       => $this->move_invoice_no,            
             'action_performer'      => $this->action_performer,
             'inventory_id'          => $this->inventory_id,
             'created_at'            => date("d M Y, h:i A", strtotime($this->created_at)),

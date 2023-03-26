@@ -129,6 +129,12 @@ Route::group([
 
     // Web Admin Inventory Items History controller
     Route::get('inventory-item-history/{invt_id}', 'InventoryItemHistoryController@index');
+
+    // Web Admin Inventory move items controller
+    Route::get('moves', 'MoveController@index');
+    Route::post('moves', 'MoveController@moveInventoryItems');
+    Route::get('move-details/{id}', 'MoveController@moveDetails'); // id is the move_id
+
 });
 
 
