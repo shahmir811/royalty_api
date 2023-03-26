@@ -227,10 +227,12 @@ class BasePurchaseController extends Controller
         $obj->inventory_id          = $inventory->id;
         $obj->description           = "Purchased " . $detail->quantity ." items at price: " . $detail->price . " each.";
         $obj->status                = "PURCHASED";
-        $obj->purchase_id          = $purchase_id;
+        $obj->purchase_id           = $purchase_id;
         $obj->purchased_invoice_no  = $detail->purchase->purchase_invoice_no;
         $obj->sale_id               = null;
         $obj->sale_invoice_no       = null;
+        $obj->move_id               = null;
+        $obj->move_invoice_no       = null;        
         $obj->created_at            = Carbon::now();
         
         InventoryItemHistory::addNewHistoryRecord($obj);           

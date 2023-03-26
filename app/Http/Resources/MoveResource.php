@@ -20,8 +20,10 @@ class MoveResource extends JsonResource
             'to_location_id'    => $this->to_location_id,
             'from_location'     => $this->from_location->name,
             'to_location'       => $this->to_location->name,
+            'move_invoice_no'   => $this->move_invoice_no,
             'created_by'        => $this->user->name,
             'created_at'        => date("d M Y, h:i A", strtotime($this->created_at)),
+            'details'           => MoveDetailResource::collection($this->move_details)
 
         ];
     }

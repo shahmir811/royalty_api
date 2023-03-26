@@ -133,6 +133,7 @@ Route::group([
     // Web Admin Inventory move items controller
     Route::get('moves', 'MoveController@index');
     Route::post('moves', 'MoveController@moveInventoryItems');
+    Route::get('move-details/{id}', 'MoveController@moveDetails'); // id is the move_id
 
 });
 

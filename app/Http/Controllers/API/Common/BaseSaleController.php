@@ -344,6 +344,8 @@ class BaseSaleController extends Controller
             $obj->purchased_invoice_no  = null;
             $obj->sale_id               = $sale_id;
             $obj->sale_invoice_no       = $detail->sale->sale_invoice_no;
+            $obj->move_id               = null;
+            $obj->move_invoice_no       = null;               
             $obj->created_at            = $detail->created_at;
 
             InventoryItemHistory::addNewHistoryRecord($obj);        
