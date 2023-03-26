@@ -214,6 +214,14 @@ Route::group([
     Route::get('remove-customer-credit-record/{credit_id}', 'CustomerCreditController@removeCustomerCreditRecord');
     Route::post('add-new-customer-credit/{customer_id}', 'CustomerCreditController@addNewCustomerCredit');
 
+    // Web Employee Inventory Items History controller
+    Route::get('inventory-item-history/{invt_id}', 'InventoryItemHistoryController@index');    
+
+    // Web Employee Inventory move items controller
+    Route::get('moves', 'MoveController@index');
+    Route::post('moves', 'MoveController@moveInventoryItems');
+    Route::get('move-details/{id}', 'MoveController@moveDetails'); // id is the move_id    
+
 
 });
 
