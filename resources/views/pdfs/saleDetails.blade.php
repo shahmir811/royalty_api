@@ -17,13 +17,35 @@
     </div>
   </div>
 
-  {{-- CDM & WEIGHT --}}
-  <div style="margin-top: -67px; margin-left: 100px">
-    <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">350.00</p>
+  <div style="margin-top: -60px; height: 73px;">
+
+    {{-- CDM & WEIGHT --}}
+    <div style="margin-left: 100px; display: inline-block; width: 30%;">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">350.00</p>
+    </div>
+
+    {{-- PAYMENT MODE --}}
+    <div style="display: inline-block; width: 35%;">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">
+        {{ $sale->payment_mode }}
+      </p>
+    </div>
+
+    {{-- SALESMAN --}}
+    <div style="display: inline-block; width: 15%;">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">
+        {{ $sale->user->name }}
+      </p>
+    </div>
+
+
   </div>
 
+
+
+
   {{-- SALES DETAILS TABLE --}}
-  <div style="margin-top: 0px; margin-left: 40px; height: 410px;">
+  <div style="margin-top: -20px; margin-left: 40px; height: 410px;">
     @if ($sale->sales->count())
           @foreach ($sale->sales as $detail)
 
