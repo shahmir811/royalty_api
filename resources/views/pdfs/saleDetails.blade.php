@@ -111,9 +111,22 @@
     <p style="font-size: 11px;">{{ number_format($sale->total_tax, 2) }}</p>
   </div>
 
-  {{-- SALES GRAND TOTAL --}}
-  <div style="margin-top: -13px; margin-left: 650px">
-    <p style="display: inline-block; font-size: 11px;">
-      {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
-    </p>
+
+  <div style="margin-left: 100px; margin-top: -5px; height: 20px;">
+
+    {{-- SALES GRAND TOTAL - IN WORDS --}}
+    <div style="display: inline-block; width: 90%;">
+      <p style="display: inline-block; font-size: 11px;">
+        {{ $sale->convertNumber($sale->sales->sum('total_sale_price')) }}
+      </p>
+    </div>
+    
+    {{-- SALES GRAND TOTAL --}}
+    <div style="display: inline-block; width: 5%;">
+      <p style="display: inline-block; font-size: 11px;">
+        {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
+      </p>
+    </div>    
+
   </div>
+
