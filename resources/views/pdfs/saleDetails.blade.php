@@ -21,6 +21,7 @@
 
   @php
     $totalCBM = number_format(0, 2);
+    $totalWeight = number_format(0, 2);
   @endphp  
 
   @if ($sale->sales->count())
@@ -29,7 +30,11 @@
       
       @php
         $singleItemTotalCBM = $detail->quantity * ($detail->inventory->item->cbm);
+        $singleItemTotalWeight = $detail->quantity * ($detail->inventory->item->weight);
+        
         $totalCBM += $singleItemTotalCBM;
+        $totalWeight += $singleItemTotalWeight;
+      
       @endphp 
 
     @endforeach
@@ -44,7 +49,7 @@
     {{-- CDM & WEIGHT --}}
     <div style="margin-left: 100px; display: inline-block; width: 30%;">
       <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">
-        {{ $totalCBM }}
+        {{ $totalCBM }} & {{ $totalWeight }}
       </p>
     </div>
 
