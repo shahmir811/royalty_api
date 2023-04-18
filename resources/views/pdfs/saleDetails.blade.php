@@ -17,11 +17,35 @@
     </div>
   </div>
 
+  {{-- CALCULATING TOTAL CBM --}}
+
+  @php
+    $totalCBM = number_format(0, 2);
+  @endphp  
+
+  @if ($sale->sales->count())
+
+    @foreach ($sale->sales as $detail)
+      
+      @php
+        $singleItemTotalCBM = $detail->quantity * ($detail->inventory->item->cbm);
+        $totalCBM += $singleItemTotalCBM;
+      @endphp 
+
+    @endforeach
+
+
+  @endif
+
+
+    
   <div style="margin-top: -60px; height: 73px;">
 
     {{-- CDM & WEIGHT --}}
     <div style="margin-left: 100px; display: inline-block; width: 30%;">
-      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">350.00</p>
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">
+        {{ $totalCBM }}
+      </p>
     </div>
 
     {{-- PAYMENT MODE --}}
