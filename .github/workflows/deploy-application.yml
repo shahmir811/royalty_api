@@ -84,13 +84,13 @@ jobs:
           port: ${{ matrix.server.port }}
           envs: GITHUB_SHA
           script: |
-            mkdir -p "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
-            tar xzf ${{ matrix.server.path }}/artifacts/${GITHUB_SHA}.tar.gz -C "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
-            rm -rf ${{ matrix.server.path }}/releases/${GITHUB_SHA}/storage
+            sudo mkdir -p "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
+            sudo tar xzf ${{ matrix.server.path }}/artifacts/${GITHUB_SHA}.tar.gz -C "${{ matrix.server.path }}/releases/${GITHUB_SHA}"
+            sudo rm -rf ${{ matrix.server.path }}/releases/${GITHUB_SHA}/storage
 
-            mkdir -p ${{ matrix.server.path }}/storage/{app,public,framework,logs}
-            mkdir -p ${{ matrix.server.path }}/storage/framework/{cache,sessions,testing,views}
-            chmod -R 0777 ${{ matrix.server.path }}/storage
+            sudo mkdir -p ${{ matrix.server.path }}/storage/{app,public,framework,logs}
+            sudo mkdir -p ${{ matrix.server.path }}/storage/framework/{cache,sessions,testing,views}
+            sudo chmod -R 0777 ${{ matrix.server.path }}/storage
 
   run-before-hooks:
     name: "${{ matrix.server.name }}: Before hook"
@@ -147,10 +147,10 @@ jobs:
           envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH,ENV_PATH,LARAVEL_ENV
           script: |
             printf "%s" "$LARAVEL_ENV" > "${BASE_PATH}/.env"
-            ln -s -f ${BASE_PATH}/.env $RELEASE_PATH
-            ln -s -f $STORAGE_PATH $RELEASE_PATH
-            ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH
-            service php8.1-fpm reload
+            sudo ln -s -f ${BASE_PATH}/.env $RELEASE_PATH
+            sudo ln -s -f $STORAGE_PATH $RELEASE_PATH
+            sudo ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH
+            sudo service php8.1-fpm reload
 
   run-after-hooks:
     name: "${{ matrix.server.name }}: After hook"
