@@ -11,46 +11,46 @@ jobs:
     outputs:
       DEPLOYMENT_MATRIX: ${{ steps.export-deployment-matrix.outputs.DEPLOYMENT_MATRIX }}
 
-  steps:
-    - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-    - name: Compile CSS and Javascript
-      run: |
-        npm install
-        npm run prod
+      - name: Compile CSS and Javascript
+        run: |
+          npm install
+          npm run prod
 
-    - name: Configure PHP 8.0
-      uses: shivammathur/setup-php@master
-      with:
-        php-version: 8.2.1
-        extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
+      - name: Configure PHP 8.0
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 8.2.1
+          extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
 
-    - name: Install Composer Dependencies
-      run: |
-        composer install --no-dev --no-interaction --prefer-dist --ignore-platform-reqs
+      - name: Install Composer Dependencies
+        run: |
+          composer install --no-dev --no-interaction --prefer-dist --ignore-platform-reqs
 
-    - name: Create deployment artifact
-      run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules --exclude=tests *
+      - name: Create deployment artifact
+        run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules --exclude=tests *
 
-    - name: Create deployment artifact
-      env:
-        GITHUB_SHA: ${{ github.sha }}
-      run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=node_modules *
+      - name: Create deployment artifact
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=node_modules *
 
-    - name: Store artifact for distribution
-      uses: actions/upload-artifact@v3
-      with:
-        name: app-build
-        path: ${{ github.sha }}.tar.gz
+      - name: Store artifact for distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: ${{ github.sha }}.tar.gz
 
-    - name: Export deployment matrix
-      id: export-deployment-matrix
-      run: |
-        delimiter="$(openssl rand -hex 8)"
-        JSON="$(cat ./.github/workflows/servers.json)"
-        echo "DEPLOYMENT_MATRIX<<${delimiter}" >> "${GITHUB_OUTPUT}"
-        echo "$JSON" >> "${GITHUB_OUTPUT}"
-        echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+      - name: Export deployment matrix
+        id: export-deployment-matrix
+        run: |
+          delimiter="$(openssl rand -hex 8)"
+          JSON="$(cat ./.github/workflows/servers.json)"
+          echo "DEPLOYMENT_MATRIX<<${delimiter}" >> "${GITHUB_OUTPUT}"
+          echo "$JSON" >> "${GITHUB_OUTPUT}"
+          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
   prepare-release-on-servers:
     name: "${{ matrix.server.name }}: Prepare release"
