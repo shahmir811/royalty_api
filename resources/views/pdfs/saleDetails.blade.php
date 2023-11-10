@@ -17,13 +17,64 @@
     </div>
   </div>
 
-  {{-- CDM & WEIGHT --}}
-  <div style="margin-top: -67px; margin-left: 100px">
-    <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">350.00</p>
+  {{-- CALCULATING TOTAL CBM --}}
+
+  @php
+    $totalCBM = number_format(0, 2);
+    $totalWeight = number_format(0, 2);
+  @endphp  
+
+  @if ($sale->sales->count())
+
+    @foreach ($sale->sales as $detail)
+      
+      @php
+        $singleItemTotalCBM = $detail->quantity * ($detail->inventory->item->cbm);
+        $singleItemTotalWeight = $detail->quantity * ($detail->inventory->item->weight);
+        
+        $totalCBM += $singleItemTotalCBM;
+        $totalWeight += $singleItemTotalWeight;
+      
+      @endphp 
+
+    @endforeach
+
+
+  @endif
+
+
+    
+  <div style="margin-top: -60px; height: 73px;">
+
+    {{-- CDM & WEIGHT --}}
+    <div style="margin-left: 100px; display: inline-block; width: 30%;">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">
+        {{ $totalCBM }} & {{ $totalWeight }}
+      </p>
+    </div>
+
+    {{-- PAYMENT MODE --}}
+    <div style="display: inline-block; width: 35%;">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">
+        {{ $sale->payment_mode }}
+      </p>
+    </div>
+
+    {{-- SALESMAN --}}
+    <div style="display: inline-block; width: 15%;">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 11px; margin-top: 15px;">
+        {{ $sale->user->name }}
+      </p>
+    </div>
+
+
   </div>
 
+
+
+
   {{-- SALES DETAILS TABLE --}}
-  <div style="margin-top: 0px; margin-left: 40px; height: 410px;">
+  <div style="margin-top: -20px; margin-left: 40px; height: 410px;">
     @if ($sale->sales->count())
           @foreach ($sale->sales as $detail)
 
@@ -60,9 +111,22 @@
     <p style="font-size: 11px;">{{ number_format($sale->total_tax, 2) }}</p>
   </div>
 
-  {{-- SALES GRAND TOTAL --}}
-  <div style="margin-top: -13px; margin-left: 650px">
-    <p style="display: inline-block; font-size: 11px;">
-      {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
-    </p>
+
+  <div style="margin-left: 100px; margin-top: -5px; height: 20px;">
+
+    {{-- SALES GRAND TOTAL - IN WORDS --}}
+    <div style="display: inline-block; width: 90%;">
+      <p style="display: inline-block; font-size: 11px;">
+        {{ $sale->convertNumber($sale->sales->sum('total_sale_price')) }}
+      </p>
+    </div>
+    
+    {{-- SALES GRAND TOTAL --}}
+    <div style="display: inline-block; width: 5%;">
+      <p style="display: inline-block; font-size: 11px;">
+        {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
+      </p>
+    </div>    
+
   </div>
+
