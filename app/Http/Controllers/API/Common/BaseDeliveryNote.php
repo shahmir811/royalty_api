@@ -80,12 +80,30 @@ class BaseDeliveryNote extends Controller
     }
 
     public function remainingQuantityToDispatch($sale_id)
-    {                    
+    { 
+        $records    = $this->remainingItems($sale_id);
+        $dispatched = $this->items_already_dispatched($sale_id);
+
+        // Convert Eloquent Collection to plain array
+        $dispatched = json_decode(json_encode($dispatched), true);        
+    
+        foreach ($records as &$record) {
+            $matchingDispatch = array_values(array_filter($dispatched, function ($dispatch) use ($record) {
+                return $dispatch["inventory_id"] === $record["inventory_id"];
+            }));
+
+            if (!empty($matchingDispatch)) {
+                $record["items_already_dispatched"]         = $matchingDispatch[0]["items_already_dispatched"];
+                $record["remaining_items_to_dispatched"]    = $record["quantity"] - (int)$record["items_already_dispatched"];
+            }
+        }
+
+
         return response() -> json([
             'status' => 1,
             'message' => 'Remaining Items to dispatch',
             'data' => [
-                'record' => $this->remainingItems($sale_id)
+                'record' => $records,
             ]
         ], 200);                        
 
@@ -112,5 +130,14 @@ class BaseDeliveryNote extends Controller
         return;
     }
 
-    
+    private function items_already_dispatched($sale_id)
+    {
+        return DeliveryNoteDetails::select('inventory_id', DB::raw('SUM(quantity) as items_already_dispatched'))
+            ->where('sale_id', '=', $sale_id)
+            ->groupBy('inventory_id') 
+            ->get(); 
+            
+    }
+
+
 }
