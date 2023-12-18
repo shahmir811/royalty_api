@@ -57,8 +57,20 @@ class DeliveryNote extends Model
     private static function getLatestSaleInvoiceNo()
     {
         $data = self::latest()->first();
-        return $data ? (int)$data->delivery_note_no + 1 : env('DELIVERY_NOTE_START', 60000);
-    }    
+
+        if ($data) {
+            $deliveryNoteParts = explode('-', $data->delivery_note_no);
+            $oldDeliveryNoteNo = (int)$deliveryNoteParts[1];
+            $newDeliveryNoteNo = $oldDeliveryNoteNo + 1;
+
+            // Format the new delivery note number with leading zero if needed
+            $formattedNewDeliveryNoteNo = str_pad($newDeliveryNoteNo, 2, '0', STR_PAD_LEFT);
+            return 'D-' . $formattedNewDeliveryNoteNo;
+        } else {
+            return 'D-01';
+        }
+    }
+    
 
     public function convertNumber($num = false)
     {
