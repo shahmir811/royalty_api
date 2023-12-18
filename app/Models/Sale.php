@@ -25,7 +25,8 @@ class Sale extends Model
         'user_id',
         'statuses_id',
         'customer_id',
-        'payment_mode'
+        'payment_mode',
+        'quotation_invoice_no'
     ];          
 
     public function user()
@@ -65,19 +66,70 @@ class Sale extends Model
             $sale->proper_invoice   = $condition ? 1 : 0;
 
             if($sale->quotation) {
-                $sale->sale_invoice_no = null;
+                // $sale->sale_invoice_no = null;
+                $sale->quotation_invoice_no = $sale->getQuotationInvoiceNo();
+
+
+            } 
+            // else {
+            //     $sale->sale_invoice_no  = $condition ? $sale->getLatestSaleInvoiceNo() : time() . 's';  
+            // }
+
+            if($sale->proper_invoice) {
+                $sale->sale_invoice_no = $sale->getSaleSeries('T');
 
             } else {
-                $sale->sale_invoice_no  = $condition ? $sale->getLatestSaleInvoiceNo() : time() . 's';  
+                $sale->sale_invoice_no = $sale->getSaleSeries('N');
             }
 
         });
     }
 
+    private function getQuotationInvoiceNo() 
+    {
+        $data = self::whereNotNull('quotation_invoice_no')
+                        ->orderBy('created_at', 'desc')
+                        ->first();
+
+        if ($data) {
+            $recordParts = explode('-', $data->quotation_invoice_no);
+            $oldRecordNo = (int)$recordParts[1];
+            $newRecordNo = $oldRecordNo + 1;
+
+            // Format the new record number with leading zero if necessary
+            $formattedNewRecordNo = str_pad($newRecordNo, 2, '0', STR_PAD_LEFT);
+            return 'Q-' . $formattedNewRecordNo;
+        } else {
+            return 'Q-01';
+        }
+    }
+
+    private function getSaleSeries($type) 
+    {
+        $properInvoice = ($type == 'T') ? 1 : 0;
+        $prefix = ($type == 'T') ? 'T' : 'N';
+
+        $data = self::where('proper_invoice', '=', $properInvoice)
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+
+        if ($data) {
+            $recordParts = explode('-', $data->sale_invoice_no);
+            $oldRecordNo = (int)$recordParts[1];
+            $newRecordNo = $oldRecordNo + 1;
+
+            // Format the new record number with leading zero if necessary
+            $formattedNewRecordNo = str_pad($newRecordNo, 2, '0', STR_PAD_LEFT);
+            return $prefix . '-' . $formattedNewRecordNo;
+        } else {
+            return $prefix . '-01';
+        }
+    }
+
     private static function getLatestSaleInvoiceNo()
     {
         $data = self::where('proper_invoice', '=', 1)->whereNotNull('sale_invoice_no')->latest()->first();
-        return $data ? $data->sale_invoice_no + 1 : env('TAX_INVOICE_NO_START', 500);
+        return $data ? $data->sale_invoice_no + 1 : env('TAX_INVOICE_NO_START', 1);
     }
 
     public function convertNumber($num = false)
