@@ -66,14 +66,8 @@ class Sale extends Model
             $sale->proper_invoice   = $condition ? 1 : 0;
 
             if($sale->quotation) {
-                // $sale->sale_invoice_no = null;
                 $sale->quotation_invoice_no = $sale->getQuotationInvoiceNo();
-
-
             } 
-            // else {
-            //     $sale->sale_invoice_no  = $condition ? $sale->getLatestSaleInvoiceNo() : time() . 's';  
-            // }
 
             if($sale->proper_invoice) {
                 $sale->sale_invoice_no = $sale->getSaleSeries('T');
