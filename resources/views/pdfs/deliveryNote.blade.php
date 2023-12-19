@@ -5,7 +5,7 @@
   <p style="margin: 0px; font-size: 14px;">Dubai Contact: {{ $sale->customer->mobile_no_dubai }}</p>
   <p style="margin: 0px; font-size: 14px;">Country Contact: {{ $sale->customer->mobile_no_country }}</p> 
 
-  <div style="position:relative;top:6px;margin: 0px; font-size: 14px;">
+  <div style="position:relative;top:6px;margin: -3px; font-size: 14px;">
     <p style="position:relative;left:45px;display: inline-block;">{{$sale->sale_invoice_no}}</p>
   </div>
 
@@ -15,7 +15,7 @@
 <div style="padding-top: 10px; display: inline-block; margin-left: 10px; width: 40%; margin-top: 270px; margin-left: 50px; height: 125px;position:relative;top:-20px;font-size: 14px;font-weight:600 !important;font-family: 'Arial', Helvetica, sans-serif;">
   <p style="margin: 0px; font-size: 14px;">{{ $note->shipping_location }}</p>
   <p style="margin: 0px; font-size: 14px;">{{ $note->contact_no }}</p>
-  <div style="margin-top: 20px; margin-left: 60px;position:relative;top:19px">
+  <div style="margin-top: 20px; margin-left: 60px;position:relative;top:16px">
     <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 14px;">{{ $note->delivery_note_no }}</p>
     <p style="margin: 0px; display: inline-block; margin-left: 135px; font-size: 14px;position:relative;top:-17px;left:10px">{{ $today }}</p>
   </div>
@@ -66,7 +66,7 @@
 </div>
 
 {{-- CREATED BY AND CBM WEIGHT --}}
-<div style="margin-left: 350px;position:relative;top:6px;left:-13px;font-size: 14px;font-weight:600 !important;font-family: 'Arial', Helvetica, sans-serif;">
+<div style="margin-left: 350px;position:relative;top:12px;left:-13px;font-size: 14px;font-weight:600 !important;font-family: 'Arial', Helvetica, sans-serif;">
   <p style="font-size: 14px; width: 100px;">{{ auth()->user()->name }}</p>
   <p style="font-size: 14px; width: 50px;">335.00</p>
 </div>
