@@ -39,6 +39,7 @@ class SaleResource extends JsonResource
             'received_by'               => $this->received_by,
             'cancelled_by'              => $this->cancelled_by,
             'make_delivery_note'        => $this->make_delivery_note,
+            'quotation_invoice_no'      => $this->quotation_invoice_no,
             'details'                   => SaleDetailResource::collection($this->sales),
             'delivery_notes'            => $this->delivery_notes->count(),
             'margin'                    => !$this->total_avg_price || !$this->total_sale_price ? 0 : $this->calculateMargin($this->status_id, $this->total_sale_price, $this->total_avg_price),
