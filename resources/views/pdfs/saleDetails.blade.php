@@ -116,14 +116,14 @@
 
     {{-- SALES GRAND TOTAL - IN WORDS --}}
     <div style="display: inline-block; width: 90%;">
-      <p style="display: inline-block; font-size: 15px;position:relative;top:-12px;left:-51px;top:10px">
+      <p style="display: inline-block; font-size: 15px;position:relative;top:-12px;left:-51px;top:7px">
         {{ $sale->convertNumber($sale->sales->sum('total_sale_price')) }}
       </p>
     </div>
     
     {{-- SALES GRAND TOTAL --}}
     <div style="display: inline-block; width: 5%;">
-      <p style="display: inline-block; font-size: 15px;position:relative;top:-9px;left:-20px;top:10px">
+      <p style="display: inline-block; font-size: 15px;position:relative;top:-9px;left:-20px;top:7px">
         {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
       </p>
     </div>    
