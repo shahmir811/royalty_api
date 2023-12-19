@@ -48,21 +48,21 @@
 
     {{-- CDM & WEIGHT --}}
     <div style="margin-left: 100px; display: inline-block; width: 30%;">
-      <p style="margin: 0px; display: inline-block; margin-left: -15px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 15px;position:relative;top:-18px;left:-10px">
+      <p style="margin: 0px; display: inline-block; margin-left: -15px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 15px;position:relative;top:-16px;left:-10px">
         {{ $totalCBM }} &  {{ $totalWeight }}
       </p>
     </div>
 
     {{-- PAYMENT MODE --}}
     <div style="display: inline-block; width: 35%;">
-      <p style="margin: 0px; display: inline-block; margin-left: 10px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 17px; position:relative;top:-18px;left:-10px;">
+      <p style="margin: 0px; display: inline-block; margin-left: 10px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 17px; position:relative;top:-16px;left:-10px;">
         {{ $sale->payment_mode }}
       </p>
     </div>
 
     {{-- SALESMAN --}}
     <div style="display: inline-block; width: 15%;">
-      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 20px;position:relative;top:-18px;left:-5px">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 20px;position:relative;top:-16px;left:-5px">
         {{ $sale->user->name }}
       </p>
     </div>
@@ -116,14 +116,14 @@
 
     {{-- SALES GRAND TOTAL - IN WORDS --}}
     <div style="display: inline-block; width: 90%;">
-      <p style="display: inline-block; font-size: 15px;position:relative;top:-12px;left:-51px;top:15px">
+      <p style="display: inline-block; font-size: 15px;position:relative;top:-12px;left:-51px;top:10px">
         {{ $sale->convertNumber($sale->sales->sum('total_sale_price')) }}
       </p>
     </div>
     
     {{-- SALES GRAND TOTAL --}}
     <div style="display: inline-block; width: 5%;">
-      <p style="display: inline-block; font-size: 15px;position:relative;top:-9px;left:-20px;top:15px">
+      <p style="display: inline-block; font-size: 15px;position:relative;top:-9px;left:-20px;top:10px">
         {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
       </p>
     </div>    
