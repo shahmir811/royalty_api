@@ -48,21 +48,21 @@
 
     {{-- CDM & WEIGHT --}}
     <div style="margin-left: 100px; display: inline-block; width: 30%;">
-      <p style="margin: 0px; display: inline-block; margin-left: -15px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 15px;position:relative;top:-20px;left:-5px">
+      <p style="margin: 0px; display: inline-block; margin-left: -15px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 15px;position:relative;top:-18px;left:-10px">
         {{ $totalCBM }} &  {{ $totalWeight }}
       </p>
     </div>
 
     {{-- PAYMENT MODE --}}
     <div style="display: inline-block; width: 35%;">
-      <p style="margin: 0px; display: inline-block; margin-left: 10px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 17px; position:relative;top:-20px;left:-5px;">
+      <p style="margin: 0px; display: inline-block; margin-left: 10px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 17px; position:relative;top:-18px;left:-10px;">
         {{ $sale->payment_mode }}
       </p>
     </div>
 
     {{-- SALESMAN --}}
     <div style="display: inline-block; width: 15%;">
-      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 20px;position:relative;top:-20px;left:-5px">
+      <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; margin-top: 20px;position:relative;top:-18px;left:-5px">
         {{ $sale->user->name }}
       </p>
     </div>
@@ -92,10 +92,10 @@
               <p style="display: inline-block; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; width: 50px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-52px">
                 {{ number_format($detail->quantity, 2) }}
               </p>
-              <p style="display: inline-block; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; width: 70px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-34px">
+              <p style="display: inline-block; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; width: 70px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-31px">
                 {{ number_format($detail->sale_price, 2) }}
               </p>
-              <p style="display: inline-block; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; width: 50px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-29px">
+              <p style="display: inline-block; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; width: 50px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-26px">
                 {{ number_format($taxOnItem, 2) }}
               </p>
               <p style="display: inline-block; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace; width: 50px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-11px">
@@ -116,14 +116,14 @@
 
     {{-- SALES GRAND TOTAL - IN WORDS --}}
     <div style="display: inline-block; width: 90%;">
-      <p style="display: inline-block; font-size: 15px;position:relative;top:-12px;left:-51px;top:18px">
+      <p style="display: inline-block; font-size: 15px;position:relative;top:-12px;left:-51px;top:15px">
         {{ $sale->convertNumber($sale->sales->sum('total_sale_price')) }}
       </p>
     </div>
     
     {{-- SALES GRAND TOTAL --}}
     <div style="display: inline-block; width: 5%;">
-      <p style="display: inline-block; font-size: 15px;position:relative;top:-9px;left:-20px;top:18px">
+      <p style="display: inline-block; font-size: 15px;position:relative;top:-9px;left:-20px;top:15px">
         {{ number_format($sale->sales->sum('total_sale_price'), 2) }}
       </p>
     </div>    
