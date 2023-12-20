@@ -2,8 +2,8 @@
 {{-- CUSTOMER DETAIL --}}
 <div style="padding-top: 10px; display: inline-block; width: 45%; margin-top: 270px; margin-left: 50px; height: 125px;position:relative;top:-20px;left:-60px;font-size: 14px;font-weight:600 !important;font-family: 'Arial', Helvetica, sans-serif;">
   <p style="margin: 0px; font-size: 13px;">{{ $sale->customer->name }}</p>
-  <p style="margin: 0px; font-size: 14px;">Dubai Contact: {{ $sale->customer->mobile_no_dubai }}</p>
-  <p style="margin: 0px; font-size: 14px;">Country Contact: {{ $sale->customer->mobile_no_country }}</p> 
+  {{-- <p style="margin: 0px; font-size: 14px;">Dubai Contact: {{ $sale->customer->mobile_no_dubai }}</p> --}}
+  {{-- <p style="margin: 0px; font-size: 14px;">Country Contact: {{ $sale->customer->mobile_no_country }}</p>  --}}
 
   <div style="position:relative;top:6px;margin: -3px; font-size: 14px;">
     <p style="position:relative;left:45px;display: inline-block;">{{$sale->sale_invoice_no}}</p>
@@ -65,8 +65,31 @@
   <p>{{ $note->convertNumber($total_packages) }}</p>
 </div>
 
+  @php
+    $totalCBM = number_format(0, 2);
+    $totalWeight = number_format(0, 2);
+  @endphp  
+
+  @if ($note->delivery_note_details->count())
+
+    @foreach ($note->delivery_note_details as $detail)
+      
+      @php
+        $singleItemTotalCBM = $detail->quantity * ($detail->inventory->item->cbm);
+        $singleItemTotalWeight = $detail->quantity * ($detail->inventory->item->weight);
+        
+        $totalCBM += $singleItemTotalCBM;
+        $totalWeight += $singleItemTotalWeight;
+      
+      @endphp 
+
+    @endforeach
+
+
+  @endif
+
 {{-- CREATED BY AND CBM WEIGHT --}}
 <div style="margin-left: 350px;position:relative;top:12px;left:-13px;font-size: 14px;font-weight:600 !important;font-family: 'Arial', Helvetica, sans-serif;">
   <p style="font-size: 14px; width: 100px;">{{ auth()->user()->name }}</p>
-  <p style="font-size: 14px; width: 50px;">335.00</p>
+  <p style="font-size: 14px; width: 50px;">{{ $totalCBM }} &  {{ $totalWeight }}</p>
 </div>
