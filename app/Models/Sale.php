@@ -66,15 +66,18 @@ class Sale extends Model
             $sale->proper_invoice   = $condition ? 1 : 0;
 
             if($sale->quotation) {
+                $sale->sale_invoice_no = null;
                 $sale->quotation_invoice_no = $sale->getQuotationInvoiceNo();
+            
+            } else {
+                if($sale->proper_invoice) {
+                    $sale->sale_invoice_no = $sale->getSaleSeries('T');
+    
+                } else {
+                    $sale->sale_invoice_no = $sale->getSaleSeries('N');
+                }
             } 
 
-            if($sale->proper_invoice) {
-                $sale->sale_invoice_no = $sale->getSaleSeries('T');
-
-            } else {
-                $sale->sale_invoice_no = $sale->getSaleSeries('N');
-            }
 
         });
     }
@@ -98,12 +101,13 @@ class Sale extends Model
         }
     }
 
-    private function getSaleSeries($type) 
+    public function getSaleSeries($type) 
     {
         $properInvoice = ($type == 'T') ? 1 : 0;
         $prefix = ($type == 'T') ? 'T' : 'N';
 
         $data = self::where('proper_invoice', '=', $properInvoice)
+                    ->whereNotNull('sale_invoice_no')
                     ->orderBy('created_at', 'desc')
                     ->first();
 
