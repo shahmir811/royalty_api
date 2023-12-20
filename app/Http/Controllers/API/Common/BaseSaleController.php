@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\Common;
 use Auth;
 use PDF;
 use Carbon\Carbon;
-use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue, InventoryItemHistory};
+use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue, InventoryItemHistory, Credit};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\{SaleResource, StatusResource, SaleDetailResource};
@@ -76,6 +76,20 @@ class BaseSaleController extends Controller
         $sale->user_id              = Auth::id();
         $sale->customer_id          = $request->customer_id;
         $sale->save();
+
+        // If the sale is actual (means not sale quotation) and payment mode is credit then add customer credit details
+        if ($sale->sale_invoice_no && $sale->payment_mode == 'Credit') {
+            $currentDate = Carbon::now();
+            $newDate = $currentDate->addDays(30);
+
+            $credit                     = new Credit;
+            $credit->customer_id        = $request->customer_id;
+            $credit->sale_id            = $sale->id;
+            $credit->due_amount         = $sale->total_sale_price;
+            $credit->due_date           = $request->dueDate ? $request->dueDate : $newDate;
+            $credit->total_amount_paid  = $sale->total_sale_price;
+            $credit->save();            
+        }
 
         foreach ($request->details as $record) {
             $this->addSaleDetails($sale->id, $record);
