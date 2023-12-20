@@ -170,13 +170,13 @@ class BaseSaleController extends Controller
         $invoice_no;
         $saleRecord = Sale::findOrFail($id);
 
-        if($saleRecord->proper_invoice) {
-            $data       = Sale::where('proper_invoice', '=', 1)->where('sale_invoice_no', '<>', null)->latest()->first();
-            $invoice_no = $data ? $data->sale_invoice_no + 1 : env('TAX_INVOICE_NO_START', 500);
-        
+        if(!$saleRecord->sale_invoice_no && $saleRecord->proper_invoice) {
+            $invoice_no = $saleRecord->getSaleSeries('T');
+    
         } else {
-            $invoice_no = time() . 's';
-        }
+            $invoice_no = $saleRecord->getSaleSeries('N');
+        
+        }        
 
         return response() -> json([
             'status' => 1,

@@ -102,6 +102,9 @@
                 {{ number_format($detail->total_sale_price, 2) }}
               </p>
             </div>
+            <div>
+              <small>{{ $detail->inventory->item->description }}</small>
+            </div>
           @endforeach          
     @endif
   </div>
