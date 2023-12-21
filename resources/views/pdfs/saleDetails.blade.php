@@ -4,6 +4,7 @@
     <p style="margin: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;">{{ $sale->customer->name }}</p>
     <p style="margin: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;">Dubai Contact: {{ $sale->customer->mobile_no_dubai }}</p>
     <p style="margin: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;">Country Contact: {{ $sale->customer->mobile_no_country }}</p>    
+    <p style="margin: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;">TRN #: {{ $sale->customer->trn }}</p>        
     {{-- <p style="margin-left: 60px;">123456</p> --}}
   </div>
 
