@@ -229,7 +229,6 @@ Route::group([
     Route::get('remaining-quantity/{sale_id}', 'DeliveryNoteController@remainingQuantityToDispatch');
     Route::get('print-delivery-note/{id}', 'DeliveryNoteController@printDeliveryNote');    
 
-
 });
 
 
