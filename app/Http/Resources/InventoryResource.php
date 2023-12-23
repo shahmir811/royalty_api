@@ -22,6 +22,7 @@ class InventoryResource extends JsonResource
             // 'description' => $this->description,
             // 'package' => $this->package,
             'package'           => number_format($this->quantity / $this->item->package,2) ,
+            'quantity_in_package' => $this->item->package,
             // 'cbm' => number_format($this->cbm,2),
             // 'weight' => number_format($this->weight,2),
             'purchase_price'    => number_format($this->purchase_price,2),
