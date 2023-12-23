@@ -39,14 +39,14 @@
 
           <div >
             <p style="display: inline-block; font-size: 14px; width: 20px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-60px;">
-              {{ $loop->index + 1 }}
+              {{ number_format((int)$detail->quantity / (int)$detail->inventory->item->package, 2)  }}
             </p>
             <p style="display: inline-block; font-size: 14px; width: 480px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-17px;">
               {{ $detail->inventory->item->name }}
             </p>
 
             <p style="display: inline-block; font-size: 14px; width: 80px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-35px;">
-              {{ number_format($detail->packages, 2) }}
+              {{ $detail->inventory->item->package }}
             </p>
 
             <p style="display: inline-block; font-size: 14px; width: 50px; margin-top: 0px; margin-bottom: 0px;position:relative;left:-10px;">
