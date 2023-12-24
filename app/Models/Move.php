@@ -24,7 +24,7 @@ class Move extends Model
         
         static::creating(function (Move $move) {
             
-            $move->move_invoice_no = time() . 'm';
+            $move->move_invoice_no =  $move->getMoveInvoiceNumber();
             $move->user_id = Auth::id();
             
         });
@@ -49,4 +49,20 @@ class Move extends Model
     {
         return $this->belongsTo(Location::class, 'to_location_id')->withTrashed();
     }        
+
+    private function getMoveInvoiceNumber()
+    {
+        $latestMove = Move::latest()->first();
+
+        if($latestMove) {
+            $oldRecordNo = (int)$latestMove->move_invoice_no;
+            $newRecordNo = $oldRecordNo + 1;
+            return $newRecordNo;
+
+        } else {
+            // TODO: Add the starting value of 6501 to .env file
+            return '6501';
+        }
+
+    }
 }
