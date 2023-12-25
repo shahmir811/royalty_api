@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Common;
 
+use DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\{Inventory, Location};
@@ -90,6 +91,33 @@ class BaseInventoryController extends Controller
             ]
         ], 200);        
     }
+
+
+    /////////////////////////////////////////////////////////////////////////  
+    public function getTotalAvgCostOfInventories()
+    {
+
+        $locationsWithTotalAvgPrice = DB::table('inventories as i')
+            ->join('locations as l', 'i.location_id', '=', 'l.id')
+            ->join('items as it', 'i.item_id', '=', 'it.id')
+            ->select(
+                'l.id as location_id',
+                'l.name',
+                DB::raw('FORMAT(SUM(i.quantity * i.avg_price), 2) as total_avg_price_sum')
+            )
+            ->groupBy('l.id', 'l.name')
+            ->get();
+
+
+
+        return response() -> json([
+            'status' => 1,
+            'message' => 'List of all inventories items avg cost sum',
+            'data' => [
+                'inventories' => $locationsWithTotalAvgPrice
+            ]
+        ], 200);        
+    }    
 
     /////////////////////////////////////////////////////////////////////////  
     private function saveDate(Inventory $item, Request $request)    

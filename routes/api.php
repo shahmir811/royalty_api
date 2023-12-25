@@ -65,6 +65,7 @@ Route::group([
     Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
     Route::get('location-based-inventory/{id}', 'InventoryController@locationBasedInventory'); // "id" is the location id
+    Route::get('get-total-inventory-avg-cost', 'InventoryController@getTotalAvgCostOfInventories');  
 
     // Web Admin Purchases Controller
     Route::get('purchase-list', 'PurchaseController@purchaseList');
@@ -166,6 +167,7 @@ Route::group([
     Route::get('show-inventoryItem/{id}', 'InventoryController@show');  
     Route::post('update-inventoryItem/{id}', 'InventoryController@update');
     Route::get('location-based-inventory/{id}', 'InventoryController@locationBasedInventory'); // "id" is the location id    
+    Route::get('get-total-inventory-avg-cost', 'InventoryController@getTotalAvgCostOfInventories');    
 
     // Web Employee PredefinedValue Controller    
     Route::get('tax-details', 'PredefinedValueController@taxDetails');
