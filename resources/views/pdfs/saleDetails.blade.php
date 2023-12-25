@@ -11,7 +11,7 @@
   {{-- DELIVERY LOCATION --}}
   <div style="padding-top: 10px; display: inline-block; margin-left: 10px; width: 40%; margin-top: 250px; margin-left: 110px; height: 73px;position:relative;top:-15px;left:-15px">
     <p style="margin: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;">{{ $sale->shipping_location }}</p>
-    <p style="margin: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;">{{ $sale->contact_no }}</p>
+    {{-- <p style="margin: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;">{{ $sale->contact_no }}</p> --}}
     <div style="margin-top: 20px; margin-left: 60px; position:relative;top:10px;left:15px">
       <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;position:relative;top:-2px ">{{ $sale->sale_invoice_no }}</p>
       <p style="margin: 0px; display: inline-block; margin-left: 145px; font-size: 15px;font-weight:600;font-family: 'Courier New', Courier, monospace;position:relative;left:15px;top:-20px">{{ $today }}</p>

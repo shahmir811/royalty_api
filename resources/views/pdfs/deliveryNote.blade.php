@@ -14,7 +14,7 @@
 {{-- DELIVERY LOCATION --}}
 <div style="padding-top: 10px; display: inline-block; margin-left: 10px; width: 40%; margin-top: 270px; margin-left: 50px; height: 125px;position:relative;top:-20px;font-size: 14px;font-weight:600 !important;font-family: 'Arial', Helvetica, sans-serif;">
   <p style="margin: 0px; font-size: 14px;">{{ $note->shipping_location }}</p>
-  <p style="margin: 0px; font-size: 14px;">{{ $note->contact_no }}</p>
+  {{-- <p style="margin: 0px; font-size: 14px;">{{ $note->contact_no }}</p> --}}
   <div style="margin-top: 20px; margin-left: 60px;position:relative;top:13px">
     <p style="margin: 0px; display: inline-block; margin-left: 0px; font-size: 14px;">{{ $note->delivery_note_no }}</p>
     <p style="margin: 0px; display: inline-block; margin-left: 135px; font-size: 14px;position:relative;top:-17px;left:14px">{{ $today }}</p>
