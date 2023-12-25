@@ -16,7 +16,6 @@ class Purchase extends Model
         'purchase_invoice_no',
         'total_amount',
         'local_purchase',
-        'purchase_invoice_no',
         'user_id',
         'status_id'
     ];      
@@ -48,11 +47,29 @@ class Purchase extends Model
 
             if (!Seed::isRunning()) {
                 // do something only when the seeder is not running
-                $purchase->purchase_invoice_no = time() . 'p';
+                // $purchase->purchase_invoice_no = time() . 'p';
+                $purchase->purchase_invoice_no = $purchase->getPurchaseInvoiceNo();
                 $purchase->user_id = Auth::id();
             }
 
         });
+    }
+
+    private function getPurchaseInvoiceNo()
+    {
+        $data = self::latest()->first();
+
+        if ($data) {
+            $recordParts = explode('-', $data->purchase_invoice_no);
+            $oldRecordNo = (int)$recordParts[1];
+            $newRecordNo = $oldRecordNo + 1;
+
+            // Format the new record number with leading zero if necessary
+            $formattedNewRecordNo = str_pad($newRecordNo, 2, '0', STR_PAD_LEFT);
+            return 'P-' . $formattedNewRecordNo;
+        } else {
+            return 'P-01';
+        }
     }
 
 }
