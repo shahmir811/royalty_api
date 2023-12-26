@@ -35,7 +35,7 @@ class SaleResource extends JsonResource
             'status_id'                 => $this->status_id,
             'payment_mode'              => $this->payment_mode,
             'status'                    => $this->status->name,
-            'created_by'                => $this->user->name,
+            'created_by'                => $this->user ? $this->user->name : '',
             'received_by'               => $this->received_by,
             'cancelled_by'              => $this->cancelled_by,
             'make_delivery_note'        => $this->make_delivery_note,
