@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\Common;
 use Auth;
 use PDF;
 use Carbon\Carbon;
-use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue, InventoryItemHistory, Credit};
+use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue, InventoryItemHistory, Credit, Payment};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\{SaleResource, StatusResource, SaleDetailResource};
@@ -85,9 +85,11 @@ class BaseSaleController extends Controller
             $credit                     = new Credit;
             $credit->customer_id        = $request->customer_id;
             $credit->sale_id            = $sale->id;
-            $credit->due_amount         = $sale->total_sale_price;
             $credit->due_date           = $request->dueDate ? $request->dueDate : $newDate;
-            $credit->total_amount_paid  = $sale->total_sale_price;
+            // $credit->due_amount         = $sale->total_sale_price;
+            // $credit->total_amount_paid  = $sale->total_sale_price;
+            $credit->due_amount         = $sale->total_tax  + $sale->total_sale_price;
+            $credit->total_amount_paid  = $sale->total_tax  + $sale->total_sale_price;
             $credit->save();            
         }
 
@@ -203,9 +205,11 @@ class BaseSaleController extends Controller
 
     public function addSaleDetailItem(Request $request)
     {
-        $data = $this->addSaleDetails($request->sale_id, $request);
+        $data = $this->addSaleDetails($request->sale_id, $request);      
 
         $this->recalculateAvgAndSalePrice($data->sale_id, $request->tax);
+
+        $this->updateCustomerCredit($request->sale_id);
 
         return response() -> json([
             'status' => 1,
@@ -228,6 +232,7 @@ class BaseSaleController extends Controller
         $data->save();    
 
         $this->recalculateAvgAndSalePrice($data->sale_id, $request->tax);
+        $this->updateCustomerCredit($data->sale_id);
 
         return response() -> json([
             'status' => 1,
@@ -246,6 +251,7 @@ class BaseSaleController extends Controller
         $data->delete();
 
         $this->recalculateAvgAndSalePrice($record->id, $record->tax_percent);
+        $this->updateCustomerCredit($data->sale_id);
 
         return response() -> json([
             'status' => 1,
@@ -380,6 +386,31 @@ class BaseSaleController extends Controller
     private function removeInventoryItemHistory($sale_id, $sale_invoice_no)
     {
         InventoryItemHistory::where('status', '=', 'SOLD')->where('sale_invoice_no', '=', $sale_invoice_no)->delete();
+        return;
+    }
+
+    private function updateCustomerCredit($sale_id)
+    {
+        // Add customer credit if sale payment mode is credit
+        $sale = Sale::findOrFail($sale_id);
+
+        if($sale->payment_mode == 'Credit') {
+            $customerCredit = Credit::where('sale_id', '=', $sale->id)
+                                    ->where('customer_id', '=', $sale->customer_id)
+                                    ->first();                                 
+
+            if($customerCredit) {
+
+                $paymentsSum = Payment::where('credit_id', $customerCredit->id)
+                                        ->sum('amount');
+
+                
+                $customerCredit->due_amount = $sale->total_tax + $sale->total_sale_price - $paymentsSum;
+                $customerCredit->total_amount_paid = $sale->total_tax + $sale->total_sale_price;
+                $customerCredit->save();
+            }
+        }    
+        
         return;
     }
  
