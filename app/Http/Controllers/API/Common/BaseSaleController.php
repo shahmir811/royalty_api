@@ -456,6 +456,7 @@ class BaseSaleController extends Controller
         $credit->total_amount_paid  = $sale->total_tax  + $sale->total_sale_price;
         $credit->save();    
         
+        return;
     }
  
 }
