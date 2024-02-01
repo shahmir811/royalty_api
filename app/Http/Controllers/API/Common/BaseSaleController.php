@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\Common;
 use Auth;
 use PDF;
 use Carbon\Carbon;
-use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue, InventoryItemHistory, Credit};
+use App\Models\{Sale, SaleDetail, Status, Inventory, PredefinedValue, InventoryItemHistory, Credit, Payment};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\{SaleResource, StatusResource, SaleDetailResource};
@@ -85,9 +85,11 @@ class BaseSaleController extends Controller
             $credit                     = new Credit;
             $credit->customer_id        = $request->customer_id;
             $credit->sale_id            = $sale->id;
-            $credit->due_amount         = $sale->total_sale_price;
             $credit->due_date           = $request->dueDate ? $request->dueDate : $newDate;
-            $credit->total_amount_paid  = $sale->total_sale_price;
+            // $credit->due_amount         = $sale->total_sale_price;
+            // $credit->total_amount_paid  = $sale->total_sale_price;
+            $credit->due_amount         = $sale->total_tax  + $sale->total_sale_price;
+            $credit->total_amount_paid  = $sale->total_tax  + $sale->total_sale_price;
             $credit->save();            
         }
 
@@ -137,6 +139,8 @@ class BaseSaleController extends Controller
         $sale->total_tax            = $request->total_tax;
         $sale->make_delivery_note   = $request->make_delivery_note;
         $sale->tax_percent          = $request->tax_percent;
+        $old_payment_mode           = $sale->payment_mode;
+        $new_payment_mode           = $request->payment_mode;
         $sale->payment_mode         = $request->payment_mode;
         $sale->contact_no           = $request->contact_no;
         $sale->shipping_location    = $request->shipping_location;
@@ -158,7 +162,7 @@ class BaseSaleController extends Controller
 
         $sale->save();
 
-        // if sale status is deleivered, then update inventory
+        // if sale status is delivered, then update inventory
         if($sale->status_id == $delivered_status->id) {
             $this->updateInventory($sale->id);
             $this->addInventoryItemHistory($sale->id, $sale->sale_invoice_no);
@@ -169,6 +173,25 @@ class BaseSaleController extends Controller
             $this->moveBackItemsToInventory($sale->id);
             $this->removeInventoryItemHistory($sale->id, $sale->sale_invoice_no);
         }
+
+        // if old_payment_mode was credit and the new_payment_mode is not credit,
+        // then remove all payments and credit history
+        if($old_payment_mode == 'Credit' && $new_payment_mode != 'Credit') {
+            $this->removeCustomerPaymentsAndCredit($sale);
+        }
+
+        // if old_payment_mode was not credit and the new_payment_mode is credit,
+        // then add customer credit history
+        if($old_payment_mode != 'Credit' && $new_payment_mode == 'Credit') {
+            $this->addCustomerCredit($sale);
+        }
+
+        // if the sale quotation status is changed from 1 to 0 then add 
+        // customer credit as well, if the payment mode is credit
+        if($sale->payment_mode == 'Credit' && $sale->quotation == 0) {
+            $this->addCustomerCredit($sale);
+        }        
+        
 
         return response() -> json([
             'status' => 1,
@@ -203,9 +226,11 @@ class BaseSaleController extends Controller
 
     public function addSaleDetailItem(Request $request)
     {
-        $data = $this->addSaleDetails($request->sale_id, $request);
+        $data = $this->addSaleDetails($request->sale_id, $request);      
 
         $this->recalculateAvgAndSalePrice($data->sale_id, $request->tax);
+
+        $this->updateCustomerCredit($request->sale_id);
 
         return response() -> json([
             'status' => 1,
@@ -228,6 +253,7 @@ class BaseSaleController extends Controller
         $data->save();    
 
         $this->recalculateAvgAndSalePrice($data->sale_id, $request->tax);
+        $this->updateCustomerCredit($data->sale_id);
 
         return response() -> json([
             'status' => 1,
@@ -246,6 +272,7 @@ class BaseSaleController extends Controller
         $data->delete();
 
         $this->recalculateAvgAndSalePrice($record->id, $record->tax_percent);
+        $this->updateCustomerCredit($data->sale_id);
 
         return response() -> json([
             'status' => 1,
@@ -381,6 +408,70 @@ class BaseSaleController extends Controller
     {
         InventoryItemHistory::where('status', '=', 'SOLD')->where('sale_invoice_no', '=', $sale_invoice_no)->delete();
         return;
+    }
+
+    private function updateCustomerCredit($sale_id)
+    {
+        // Add customer credit if sale payment mode is credit
+        $sale = Sale::findOrFail($sale_id);
+
+        if($sale->payment_mode == 'Credit') {
+            $customerCredit = Credit::where('sale_id', '=', $sale->id)
+                                    ->where('customer_id', '=', $sale->customer_id)
+                                    ->first();                                 
+
+            if($customerCredit) {
+
+                $paymentsSum = Payment::where('credit_id', $customerCredit->id)
+                                        ->sum('amount');
+
+                
+                $customerCredit->due_amount = $sale->total_tax + $sale->total_sale_price - $paymentsSum;
+                $customerCredit->total_amount_paid = $sale->total_tax + $sale->total_sale_price;
+                $customerCredit->save();
+            }
+        }    
+        
+        return;
+    }
+
+    private function removeCustomerPaymentsAndCredit(Sale $sale)
+    {
+        $customerCredit = Credit::where('sale_id', '=', $sale->id)
+                                ->where('customer_id', '=', $sale->customer_id)
+                                ->first();
+                                
+        if($customerCredit) {
+            Payment::where('credit_id', $customerCredit->id)->delete();
+            $customerCredit->delete();
+        }
+
+        return;
+    }
+
+    private function addCustomerCredit(Sale $sale)
+    {
+
+        $customerCredit = Credit::where('sale_id', '=', $sale->id)
+                                ->where('customer_id', '=', $sale->customer_id)
+                                ->first();
+        
+        if (!$customerCredit && $sale->quotation == 0) {
+
+            $currentDate = Carbon::now();
+            $newDate = $currentDate->addDays(30);
+    
+            $credit                     = new Credit;
+            $credit->customer_id        = $sale->customer_id;
+            $credit->sale_id            = $sale->id;
+            $credit->due_date           = $newDate;
+            $credit->due_amount         = $sale->total_tax  + $sale->total_sale_price;
+            $credit->total_amount_paid  = $sale->total_tax  + $sale->total_sale_price;
+            $credit->save();    
+            
+            return;
+        }
+
     }
  
 }
