@@ -185,6 +185,12 @@ class BaseSaleController extends Controller
         if($old_payment_mode != 'Credit' && $new_payment_mode == 'Credit') {
             $this->addCustomerCredit($sale);
         }
+
+        // if the sale quotation status is changed from 1 to 0 then add 
+        // customer credit as well, if the payment mode is credit
+        if($sale->payment_mode == 'Credit' && $sale->quotation == 0) {
+            $this->addCustomerCredit($sale);
+        }        
         
 
         return response() -> json([
@@ -445,18 +451,27 @@ class BaseSaleController extends Controller
 
     private function addCustomerCredit(Sale $sale)
     {
-        $currentDate = Carbon::now();
-        $newDate = $currentDate->addDays(30);
 
-        $credit                     = new Credit;
-        $credit->customer_id        = $sale->customer_id;
-        $credit->sale_id            = $sale->id;
-        $credit->due_date           = $newDate;
-        $credit->due_amount         = $sale->total_tax  + $sale->total_sale_price;
-        $credit->total_amount_paid  = $sale->total_tax  + $sale->total_sale_price;
-        $credit->save();    
+        $customerCredit = Credit::where('sale_id', '=', $sale->id)
+                                ->where('customer_id', '=', $sale->customer_id)
+                                ->first();
         
-        return;
+        if (!$customerCredit && $sale->quotation == 0) {
+
+            $currentDate = Carbon::now();
+            $newDate = $currentDate->addDays(30);
+    
+            $credit                     = new Credit;
+            $credit->customer_id        = $sale->customer_id;
+            $credit->sale_id            = $sale->id;
+            $credit->due_date           = $newDate;
+            $credit->due_amount         = $sale->total_tax  + $sale->total_sale_price;
+            $credit->total_amount_paid  = $sale->total_tax  + $sale->total_sale_price;
+            $credit->save();    
+            
+            return;
+        }
+
     }
  
 }
