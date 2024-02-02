@@ -138,7 +138,8 @@ class BasePurchaseController extends Controller
 
     public function printPurchaseDetails($id)
     {
-        $pdf = PDF::loadView('pdfs.purchaseDetails', compact('id'));
+        $purchase = Purchase::findOrFail($id);
+        $pdf = PDF::loadView('pdfs.purchaseDetails', compact(['id', 'purchase']));
         $pdf->setPaper('a4' , 'portrait');
         return $pdf->output();  
     }
@@ -204,6 +205,7 @@ class BasePurchaseController extends Controller
         $inventory = Inventory::where('location_id', '=', $detail->location_id)->where('item_id', '=', $detail->item_id)->first();
 
         if($inventory) {
+            $inventory->avg_price = $this->updateItemAveragePrice($inventory, $detail->quantity,  $detail->price);
             $inventory->purchase_price = $detail->price;
             $inventory->quantity += $detail->quantity;
             $inventory->save();
@@ -238,5 +240,14 @@ class BasePurchaseController extends Controller
         InventoryItemHistory::addNewHistoryRecord($obj);           
 
         return ;
+    }
+
+    private function updateItemAveragePrice(Inventory $inventory, $newQuantity, $newPrice) 
+    {
+        $totalValue         = $inventory->quantity * $inventory->avg_price + $newQuantity * $newPrice;
+        $totalQuantity      = $inventory->quantity + $newQuantity;
+        $avgPrice           = $totalValue / $totalQuantity;
+        
+        return $avgPrice;
     }
 }
